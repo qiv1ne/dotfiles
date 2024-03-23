@@ -9,7 +9,13 @@ Discord
 7zip
 Epic games 
 ProtonVPN
-
+Photoshop
+Word
 
 
 ## Gentoo Linux
+[Base]()
+Development tools:
+Android studio
+Intellij Idea
+Pycharm
