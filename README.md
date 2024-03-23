@@ -3,14 +3,26 @@
 ### [Gentoo Linux](#)
 
 ## Windows 10
+
 Brave
+
 Steam
+
 Discord
+
 7zip
+
 Epic games 
+
 ProtonVPN
+
 Photoshop
+
 Word
+
+PowerToys
+
+qbittorrent 
 
 
 ## Gentoo Linux
