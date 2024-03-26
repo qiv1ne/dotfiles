@@ -27,14 +27,9 @@ PowerToys
 
 qbittorrent 
 
-
-## Gentoo Linux
-[Base]()
-
-Development tools:
-
 Android studio
 
 Intellij Idea
 
 Pycharm
+
