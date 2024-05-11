@@ -1,13 +1,36 @@
+# Linux(host os)
 
-## Windows 10
+### Distro: Gentoo
 
-Video card setting 
-https://www.intel.com/content/www/us/en/support/articles/000090168/graphics.html
+### Windows manager: Hyprland
 
-Brave
+#### Browser
 
-Steam
+Main: Brave
 
+Second: Firefox
+
+Third: links
+
+#### Editors and IDE
+
+Main: NeoVim
+
+For Java: Intellij Idea
+
+
+
+#### Games
+For cracked: [Lutris](https://wiki.gentoo.org/wiki/Lutris)
+
+For official: Steam
+
+#### Other application and utils
+
+Virtual machines: Oracle VMBox
+
+# Windows(guest os)
+Torrent 
 Discord
 
 7zip
@@ -48,4 +71,4 @@ power modes: [cpu](https://github.com/AdnanHodzic/auto-cpufreq) + [tlp for batte
 
 for configuring buttons using [xev](https://packages.gentoo.org/packages/x11-apps/xev), [forum](https://forums.gentoo.org/viewtopic-p-6909782.html)
 
-for games [Lutris](https://wiki.gentoo.org/wiki/Lutris) and HyperPlay launcher
+for games  and HyperPlay launcher
