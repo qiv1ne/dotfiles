@@ -30,3 +30,6 @@ Intellij Idea
 
 Pycharm
 
+Linux config
+Gentoo + i3
+[multiple monitors](https://fedoramagazine.org/using-i3-with-multiple-monitors/)
