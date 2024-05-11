@@ -1,8 +1,10 @@
 # Linux(host os)
 
-### Distro: Gentoo
+### Distro: [Gentoo](https://wiki.gentoo.org/wiki/Handbook:AMD64)
 
 ### Windows manager: Hyprland
+
+#### [Gentoo internal things]()
 
 #### Browser
 
@@ -29,33 +31,27 @@ For official: Steam
 
 Virtual machines: Oracle VMBox
 
-# Windows(guest os)
-Torrent 
-Discord
+Torrent manager: qBitTorrent 
 
-7zip
+Communication: Discord 
+
+# Windows(guest os)
+
+#### Stuff for college
+
+Image editors: Photoshop and stuff like this
+
+Document editor: Word, Excel and other
+
+
 
 Epic games 
 
 ProtonVPN
 
-Photoshop
-
-Word
-
-PowerToys
-
-qbittorrent 
-
-Android studio
-
-Intellij Idea
-
-Pycharm
-
 ## Linux config
 
-[Gentoo](https://wiki.gentoo.org/wiki/Handbook:AMD64)
+
 
 [genkernel](https://wiki.gentoo.org/wiki/Genkernel) instead of distribution
 
