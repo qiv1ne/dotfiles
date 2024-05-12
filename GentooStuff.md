@@ -16,10 +16,15 @@ for configuring buttons using [xev](https://packages.gentoo.org/packages/x11-app
 
  [Installing with Handbook](https://wiki.gentoo.org/wiki/Handbook:AMD64)
 
-## Packages
-emerge --ask --quiet --verbose git sudo usbutils dosfstools pciutils gentoolkit
+## Necessary packages
 
-## Useradd
+git sudo
+
+## Useful packages
+
+emerge --ask --quiet --verbose usbutils dosfstools pciutils gentoolkit
+
+## Adding new user
 
     useradd -m username
     usermod -aG wheel,audio,video
@@ -52,23 +57,6 @@ https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md
 
 https://github.com/romkatv/powerlevel10k
 
-## i3wm
-
-First install xorg sever
-
-    sudo emerge --ask --quiet --verbose xorg-server
-
-Now try to start with
- 
-    startx
-
-If it start install i3 and dependencies
-
-    sudo emerge --ask --quiet --verbose i3 i3status i3lock xterm dmenu
-
-And try to start i3 with
-
-    i3
 
 ## Display-manager
 
