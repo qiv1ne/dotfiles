@@ -35,6 +35,8 @@ Torrent manager: qBitTorrent
 
 Communication: Discord 
 
+VPN: ProtonVPN
+
 # Windows(guest os)
 
 #### Stuff for college
@@ -42,15 +44,3 @@ Communication: Discord
 Image editors: Photoshop and stuff like this
 
 Document editor: Word, Excel and other
-
-
-
-Epic games 
-
-ProtonVPN
-
-## Linux config
-
-
-
-for games  and HyperPlay launcher
