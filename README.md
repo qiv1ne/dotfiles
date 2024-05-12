@@ -4,7 +4,7 @@
 
 ### Windows manager: Hyprland
 
-#### [Gentoo internal things]()
+#### [Gentoo internal stuff]()
 
 #### Browser
 
