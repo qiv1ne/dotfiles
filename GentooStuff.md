@@ -14,6 +14,10 @@ power modes: [cpu](https://github.com/AdnanHodzic/auto-cpufreq) + [tlp for batte
 
 for configuring buttons using [xev](https://packages.gentoo.org/packages/x11-apps/xev), [forum](https://forums.gentoo.org/viewtopic-p-6909782.html)
 
+add disk encryption 
+
+delete root user for security 
+
  [Installing with Handbook](https://wiki.gentoo.org/wiki/Handbook:AMD64)
 
 ## Necessary packages
