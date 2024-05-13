@@ -4,7 +4,7 @@
 
 ### Windows manager: Hyprland
 
-#### [Gentoo internal stuff]()
+#### [Gentoo internal stuff](https://github.com/Cirqach/PCSetup/blob/23b3b479f1d61f524c25c776e6e14637b21c0cc0/GentooStuff.md)
 
 #### Browser
 
