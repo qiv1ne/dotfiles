@@ -1,4 +1,4 @@
-# Installing Gentoo plan
+# Gentoo plan
 
 Use [genkernel](https://wiki.gentoo.org/wiki/Genkernel) instead of distribution kernel and highly customize it
 
