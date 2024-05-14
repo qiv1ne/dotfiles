@@ -22,7 +22,7 @@ delete root user for security
 
 ## Necessary packages
 
-git sudo
+git 
 
 ## Useful packages
 
