@@ -108,34 +108,50 @@ cfdisk /dev/{device}
 ### formating disk
 ```
 mkfs.btrfs /dev/{root}
+```
+```
 mkfs.{vfat/ext2} /dev/{efi/boot}
 ```
 ### Mounting the root partition
 ```
 mkdir --parents /mnt/gentoo
+```
+```
 mkdir --parents /mnt/gentoo/efi
+```
+```
 mount /dev/sda3 /mnt/gentoo
 ```
 ## Installing base system
-
-    cd /mnt/gentoo
+```
+cd /mnt/gentoo
+```
 
 ### Syncing time 
-
-    date
-    chronyd -q
+```
+date
+```
+```
+chronyd -q
+```
 if date is wrong than set it manualy with this pattern **{month}{day}{hours}{minutes}{year}**, for example to set the date to October 3rd, 13:16 in the year 2021:
 
     
     date 100313162021 
 
 ### Downloading stage file
+```
 
     links https://www.gentoo.org/downloads/mirrors/
+```
+```
     tar xpvf stage3-*.tar.xz --xattrs-include='*.*' --numeric-owner
+```
 
 ### Setting compile options
+```
     nano /mnt/gentoo/etc/portage/make.conf
+```
 write **-march=native**
 set **MAKEOPTS="-j4 -l5"**
 j = min(RAM/2GB, threads)
@@ -150,17 +166,33 @@ l = number of threads returned by **nproc**
 ### Mounting the necessary filesystems
 ```
     mount --types proc /proc /mnt/gentoo/proc
+```
+```
     mount --rbind /sys /mnt/gentoo/sys
+```
+```
     mount --make-rslave /mnt/gentoo/sys
+```
+```
     mount --rbind /dev /mnt/gentoo/dev
+```
+```
     mount --make-rslave /mnt/gentoo/dev
+```
+```
     mount --bind /run /mnt/gentoo/run
+```
+```
     mount --make-slave /mnt/gentoo/run
 ```
 ### Entering the new environment
 ```
     chroot /mnt/gentoo /bin/bash
+```
+```
     source /etc/profile
+```
+```
     export PS1="(chroot) ${PS1}"
 ```
 ### Preparing for a bootloader
@@ -168,6 +200,8 @@ l = number of threads returned by **nproc**
 >for bios system `mount /dev/sda1 /boot`
 ```
     mkdir /efi
+```
+```
     mount /dev/sda1 /efi
 ```
 ## Configuring Portage
@@ -179,6 +213,8 @@ l = number of threads returned by **nproc**
 ### Selecting mirrors
 ```
     emerge --ask --verbose --oneshot app-portage/mirrorselect
+```
+```
     mirrorselect -i -o >> /etc/portage/make.conf
 ```
 ### Updating the Gentoo ebuild repository
@@ -188,12 +224,18 @@ l = number of threads returned by **nproc**
 ### add C flags
 ```
     emerge --ask --oneshot app-portage/cpuid2cpuflags
+```
+```
     cpuid2cpuflags
+```
+```
     echo "*/* $(cpuid2cpuflags)" > /etc/portage/package.use/00cpu-flags
 ```
 ### Choosing the right profile
 ```
     eselect profile list
+```
+```
     eselect profile set 2
 ```
 ### Configuring the USE variable
@@ -219,12 +261,18 @@ use flags: "wayland -kde -libreoffice pipewire qt5 gtk bluetooth"
 
 ```
     emerge --ask --verbose --update --deep --newuse @world
+```
+```
     emerge --ask --depclean
 ```
 ## Timezone
 ```
     ls -l /usr/share/zoneinfo/Europe/Moscow
+```
+```
     echo "Europe/Moscow" > /etc/timezone
+```
+```
     emerge --config sys-libs/timezone-data
 ```
 ## Configure locales
@@ -233,15 +281,17 @@ use flags: "wayland -kde -libreoffice pipewire qt5 gtk bluetooth"
 ```
 for add english and russian locales:
 ```
-    en_US ISO-8859-1
     en_US.UTF-8 UTF-8
     ru_RU.UTF-8 UTF-8
-    ru_RU ISO-8859-1
 ```
 setting locales
 ```
 locale-gen
+```
+```
 eselect locale list
+```
+```
 eselect locale set 2
 ```
 
@@ -249,6 +299,8 @@ eselect locale set 2
 ### Installing the kernel sources
 ```
 emerge --ask sys-kernel/installkernel
+```
+```
 emerge --ask sys-kernel/gentoo-sources
 ```
 ### Installing firmware and microcode
@@ -260,17 +312,25 @@ emerge --ask sys-kernel/linux-firmware sys-firmware/intel-microcode
 ###  Preparing genkernel
 ```
 mkdir /etc/portage/package.license
+```
+```
 echo "sys-kernel/linux-firmware @BINARY-REDISTRIBUTABLE" >> /etc/portage/package.license
+```
+```
 emerge --ask sys-kernel/genkernel
 ```
 for installing all kernel for all supported software ```genkernel --mountboot --install all```
 ```
 ls /boot/vmlinu* /boot/initramfs*
+```
+```
 ls /lib/modules
 ```
 choosing kernel
 ```
 eselect kernel list
+```
+```
 eselect kernel set 1
 ```
 
@@ -281,6 +341,8 @@ echo "sys-kernel/installkernel grub" >> /etc/portage/package.use/installkernel
 ## Writing fstab
 ```
 blkid
+```
+```
 vim /etc/fstab
 ```
 write by [example](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/System)
