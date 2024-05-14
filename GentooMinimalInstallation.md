@@ -216,12 +216,6 @@ emerge --ask sys-kernel/linux-firmware sys-firmware/intel-microcode
 ```
 ###  Preparing genkernel
 ```
-mkdir /etc/portage/package.license
-```
-```
-echo "sys-kernel/linux-firmware @BINARY-REDISTRIBUTABLE" >> /etc/portage/package.license/linux-firmware
-```
-```
 emerge --ask sys-kernel/genkernel
 ```
 for installing all kernel for all supported software ```genkernel --mountboot --install all```
