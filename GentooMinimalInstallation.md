@@ -41,21 +41,20 @@ chronyd -q
 ```
 if date is wrong than set it manualy with this pattern **{month}{day}{hours}{minutes}{year}**, for example to set the date to October 3rd, 13:16 in the year 2021:
 
-    
-    date 100313162021 
-
+```    
+date 100313162021 
+```
 ### Downloading stage file
 ```
-
-    links https://www.gentoo.org/downloads/mirrors/
+links https://www.gentoo.org/downloads/mirrors/
 ```
 ```
-    tar xpvf stage3-*.tar.xz --xattrs-include='*.*' --numeric-owner
+tar xpvf stage3-*.tar.xz --xattrs-include='*.*' --numeric-owner
 ```
 
 ### Setting compile options
 ```
-    nano /mnt/gentoo/etc/portage/make.conf
+nano /mnt/gentoo/etc/portage/make.conf
 ```
 write **-march=native**
 set **MAKEOPTS="-j4 -l5"**
