@@ -298,3 +298,93 @@ emerge --ask net-misc/dhcpcd
 ```
 rc-update add dhcpcd default
 ```
+```
+rc-service dhcpcd start
+```
+### Hosts file
+```
+vim /etc/hosts
+```
+```
+127.0.0.1 localhost
+::1 localhost
+127.0.1.1 archlinux.localdomain archlinux
+```
+## System information
+### Root password
+```
+passwd
+```
+### [Other configuration](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/System)
+## Tools
+### Loggin daemon
+```
+emerge --ask app-admin/sysklogd
+```
+```
+rc-update add sysklogd default
+```
+### Cron daemon
+```
+emerge --ask sys-process/cronie
+```
+```
+rc-update add cronie default
+```
+### File indexing
+```
+emerge --ask sys-apps/mlocate
+```
+### SSH
+```
+rc-update add sshd default
+```
+### Time synchronization
+```
+emerge --ask net-misc/chrony
+```
+```
+rc-update add chronyd default
+```
+### File system tools
+```
+emerge --ask sys-block/io-scheduler-udev-rules 	sys-fs/xfsprogs sys-fs/e2fsprogs 	sys-fs/dosfstools	sys-fs/btrfs-progs ntfs-3g
+```
+### Networking tools
+#### Ethernet
+```
+emerge --ask net-dialup/ppp
+```
+#### WiFi
+```
+emerge --ask net-wireless/iw net-wireless/wpa_supplicant
+```
+## Bootloader
+### GRUB
+```
+echo 'GRUB_PLATFORMS="efi-64"' >> /etc/portage/make.conf
+```
+```
+emerge --ask --verbose sys-boot/grub
+```
+```
+grub-install --target=x86_64-efi --efi-directory=/efi --removable
+```
+```
+grub-mkconfig -o /boot/grub/grub.cfg
+```
+
+## Rebooting
+```
+exit
+cd
+```
+```
+umount -l /mnt/gentoo/dev{/shm,/pts,}
+```
+```
+umount -R /mnt/gentoo
+```
+```
+reboot
+```
