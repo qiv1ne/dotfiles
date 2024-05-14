@@ -246,16 +246,55 @@ eselect locale set 2
 ```
 
 ## Kernel
+### Installing the kernel sources
+```
+emerge --ask sys-kernel/installkernel
+emerge --ask sys-kernel/gentoo-sources
+```
 ### Installing firmware and microcode
 >[!note]
 > Microcode for AMD processor installed in linux-firmware
 ```
 emerge --ask sys-kernel/linux-firmware sys-firmware/intel-microcode
 ```
-###  Installing genkernel
+###  Preparing genkernel
 ```
 mkdir /etc/portage/package.license
 echo "sys-kernel/linux-firmware @BINARY-REDISTRIBUTABLE" >> /etc/portage/package.license
 emerge --ask sys-kernel/genkernel
 ```
 for installing all kernel for all supported software ```genkernel --mountboot --install all```
+```
+ls /boot/vmlinu* /boot/initramfs*
+ls /lib/modules
+```
+choosing kernel
+```
+eselect kernel list
+eselect kernel set 1
+```
+
+### Kernel installation
+```
+echo "sys-kernel/installkernel grub" >> /etc/portage/package.use/installkernel
+```
+## Writing fstab
+```
+blkid
+vim /etc/fstab
+```
+write by [example](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/System)
+
+## Networking
+
+### Hostname
+```
+echo {name} > /etc/hostname
+```
+### Network
+```
+emerge --ask net-misc/dhcpcd
+```
+```
+rc-update add dhcpcd default
+```
