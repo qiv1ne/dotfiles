@@ -219,7 +219,7 @@ emerge --ask sys-kernel/linux-firmware sys-firmware/intel-microcode
 mkdir /etc/portage/package.license
 ```
 ```
-echo "sys-kernel/linux-firmware @BINARY-REDISTRIBUTABLE" >> /etc/portage/package.license
+echo "sys-kernel/linux-firmware @BINARY-REDISTRIBUTABLE" >> /etc/portage/package.license/linux-firmware
 ```
 ```
 emerge --ask sys-kernel/genkernel
