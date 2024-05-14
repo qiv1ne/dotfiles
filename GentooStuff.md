@@ -258,4 +258,4 @@ mkdir /etc/portage/package.license
 echo "sys-kernel/linux-firmware @BINARY-REDISTRIBUTABLE" >> /etc/portage/package.license
 emerge --ask sys-kernel/genkernel
 ```
-for installing all kernel for all supported software ``genkernel --mountboot --install all``
+for installing all kernel for all supported software ```genkernel --mountboot --install all```
