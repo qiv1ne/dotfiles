@@ -232,13 +232,6 @@ eselect kernel list
 eselect kernel set 1
 ```
 
-## Installing bootloader
-```
-echo "sys-kernel/installkernel grub" >> /etc/portage/package.use/installkernel
-```
-```
-emerge --ask sys-kernel/installkernel
-```
 
 ## Writing fstab
 ```
@@ -326,6 +319,12 @@ emerge --ask net-wireless/iw net-wireless/wpa_supplicant
 ## Bootloader
 ### GRUB
 ```
+echo "sys-kernel/installkernel grub" >> /etc/portage/package.use/installkernel
+```
+```
+emerge --ask sys-kernel/installkernel
+```
+```
 echo 'GRUB_PLATFORMS="efi-64"' >> /etc/portage/make.conf
 ```
 ```
@@ -341,6 +340,8 @@ grub-mkconfig -o /boot/grub/grub.cfg
 ## Rebooting
 ```
 exit
+```
+```
 cd
 ```
 ```
