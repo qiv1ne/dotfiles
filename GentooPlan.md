@@ -77,3 +77,65 @@ https://forums.gentoo.org/viewtopic-t-1114772-start-0.html
 ## vmbox
 
 https://wiki.gentoo.org/wiki/VirtualBox
+
+
+
+
+
+
+https://www.atlassian.com/git/tutorials/dotfiles
+
+[Terminal emulator - hyprland]
+
+[Editor - neovim](https://wiki.gentoo.org/wiki/Neovim)
+
+[Task manager - btop](https://wiki.gentoo.org/wiki/Btop)
+ 
+[App launcher - rofi](https://packages.gentoo.org/packages/x11-misc/rofi)
+
+[Notification manager - Dunst](https://wiki.gentoo.org/wiki/Dunst) 
+ 
+[Clipboard manager - [cliphist](https://gpo.zugaina.org/gui-apps/cliphist) + https://wiki.hyprland.org/Useful-Utilities/Clipboard-Managers/  
+
+[Panel - waybar](https://wiki.gentoo.org/wiki/Waybar)
+
+[Music - mpv](https://wiki.gentoo.org/wiki/Mpv) + https://github.com/yurihs/waybar-media
+  
+[Wallpaper manager - feh](https://wiki.gentoo.org/wiki/Feh)
+
+[Wifi - wpa_supplicant](https://wiki.gentoo.org/wiki/Wpa_supplicant)  
+
+[Shell - zsh](https://wiki.gentoo.org/wiki/Zsh)
+
+#### Bloatware 
+[Network management - dhcpcd_ui](https://wiki.gentoo.org/wiki/Dhcpcd-ui)  
+
+[File manager - dolphin](https://wiki.gentoo.org/wiki/Dolphin)  
+
+[Torrent client - qbittorrent](https://wiki.gentoo.org/wiki/QBittorrent)  
+
+[Archive manager - ark](https://packages.gentoo.org/packages/kde-apps/ark)  
+
+Web browser - [qutebrowser](https://wiki.gentoo.org/wiki/Qutebrowser) + [brave](https://wiki.gentoo.org/wiki/Brave)  
+
+[Audio - audacity](https://wiki.gentoo.org/wiki/Audacity)  
+
+[Video player - vlc](https://wiki.gentoo.org/wiki/VLC)
+ 
+[Disk manager - GParted](https://wiki.gentoo.org/wiki/User:Maffblaster/Drafts/Gparted) 
+
+
+## Fonts
+
+    sudo cp -r .fonts/* /use/share/fonts/
+
+
+## Installing dependencies for other stuff
+
+
+Neovim 0.9.2+
+Nerd font
+
+    neovim git npm python curl wget unzip tar gzip cargo go
+
+
