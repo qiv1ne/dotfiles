@@ -22,3 +22,13 @@ passwd -dl root
 ```
 rm /stage3-*.tar.*
 ```
+## Add guru gentoo overlay
+```
+emerge --ask  app-eselect/eselect-repository
+```
+```
+eselect repository enable guru
+```
+```
+emerge --sync guru
+```
