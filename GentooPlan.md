@@ -85,23 +85,25 @@ https://wiki.gentoo.org/wiki/VirtualBox
 
 https://www.atlassian.com/git/tutorials/dotfiles
 
-[Terminal emulator - hyprland]
+[Window manager - hyprland]()
+
+[Terminal - kitty]()
 
 [Editor - neovim](https://wiki.gentoo.org/wiki/Neovim)
 
 [Task manager - btop](https://wiki.gentoo.org/wiki/Btop)
  
-[App launcher - rofi](https://packages.gentoo.org/packages/x11-misc/rofi)
+[App launcher - fuzzel](https://codeberg.org/dnkl/fuzzel)
 
 [Notification manager - Dunst](https://wiki.gentoo.org/wiki/Dunst) 
  
-[Clipboard manager - [cliphist](https://gpo.zugaina.org/gui-apps/cliphist) + https://wiki.hyprland.org/Useful-Utilities/Clipboard-Managers/  
+[Clipboard manager - [wl-clipboard ](https://gpo.zugaina.org/gui-apps/cliphist) + https://wiki.hyprland.org/Useful-Utilities/Clipboard-Managers/  
 
 [Panel - waybar](https://wiki.gentoo.org/wiki/Waybar)
 
 [Music - mpv](https://wiki.gentoo.org/wiki/Mpv) + https://github.com/yurihs/waybar-media
   
-[Wallpaper manager - feh](https://wiki.gentoo.org/wiki/Feh)
+[Wallpaper manager - hyprpaper](https://wiki.gentoo.org/wiki/Hyprpaper)
 
 [Wifi - wpa_supplicant](https://wiki.gentoo.org/wiki/Wpa_supplicant)  
 
@@ -124,6 +126,13 @@ Web browser - [qutebrowser](https://wiki.gentoo.org/wiki/Qutebrowser) + [brave](
  
 [Disk manager - GParted](https://wiki.gentoo.org/wiki/User:Maffblaster/Drafts/Gparted) 
 
+Virual machine - KVM + [QEMU](https://wiki.gentoo.org/wiki/QEMU) + [Virt-Manager](https://wiki.gentoo.org/wiki/Virt-manager)
+
+Games - [Lutris]() + [Steam]()
+
+Browser - [Brave]() + [Tor]()
+
+[Fonts](#)
 
 ## Fonts
 
@@ -138,4 +147,19 @@ Nerd font
 
     neovim git npm python curl wget unzip tar gzip cargo go
 
+
+
+## Hyprland
+```
+emerge --ask USE="X" gui-wm/hyprland gnome-base/gsettings-desktop-schemas xdg-desktop-portal-hyprland imv dunst hyprpaper wl-clipboard doas 
+```
+```
+rc-update add seatd default
+```
+```
+
+## Fuzzel
+```
+emerge -avt gui-apps/fuzzel
+```
 
