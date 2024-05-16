@@ -157,9 +157,47 @@ emerge --ask USE="X" gui-wm/hyprland gnome-base/gsettings-desktop-schemas xdg-de
 rc-update add seatd default
 ```
 ```
+chmod +x ./hypr.sh
+```
+```
+sh hypr.sh
+```
 
+ kitty
+
+neovim
+
+btop
+ 
 ## Fuzzel
 ```
 emerge -avt gui-apps/fuzzel
 ```
+
+## waybar
+
+
+## mpv + https://github.com/yurihs/waybar-media
+
+## zsh
+
+## dhcpcd_ui
+
+## dolphin 
+
+## qbittorrent
+
+## ark
+
+## audacity
+
+## vlc
+
+## GParted
+
+## KVM + QEMU + Virt-Manager
+
+## Lutris + Steam
+
+## Brave + Tor
 
