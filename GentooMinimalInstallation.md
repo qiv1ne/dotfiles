@@ -258,15 +258,6 @@ rc-update add dhcpcd default
 ```
 rc-service dhcpcd start
 ```
-### Hosts file
-```
-vim /etc/hosts
-```
-```
-127.0.0.1 localhost
-::1 localhost
-127.0.1.1 archlinux.localdomain archlinux
-```
 ## System information
 ### Root password
 ```
@@ -336,6 +327,33 @@ grub-install --target=x86_64-efi --efi-directory=/efi --removable
 ```
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
+
+## Installing DE[KDE]
+```
+USE="smart sddm networkmanager grub display-manager bluetooth grub" emerge --ask --verbose --quiet plasma-meta display-manager-init xrandr sddm kde-plasma/sddm-kcm
+```
+```
+rc-update add elogind boot
+```
+```
+rc-service elogind start
+```
+```
+echo "CHECKVT=7" > /etc/conf.d/display-manager && echo 'DISPLAYMANAGER="sddm"' >> /etc/conf.d/display-manager
+```
+```
+rc-update add display-manager default
+```
+```
+rc-service display-manager start
+```
+
+## Configuring multi monitor
+```
+xrandr | grep -w connected
+```
+write scirpt by example: https://wiki.gentoo.org/wiki/SDDM
+
 
 ## Rebooting
 ```
