@@ -1,10 +1,7 @@
-# Linux(host os)
-
+# [Linux(host os)](GentooStuff.md)
 ### Distro: [Gentoo](https://wiki.gentoo.org/wiki/Handbook:AMD64)
 
 ### DE: KDE
-
-#### [Gentoo internal stuff](https://github.com/Cirqach/PCSetup/blob/23b3b479f1d61f524c25c776e6e14637b21c0cc0/GentooStuff.md)
 
 #### Browser
 
