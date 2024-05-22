@@ -1,7 +1,7 @@
 # Setup after clean install
 ## Adding new user
 ```
-useradd -m -G users,wheel,audio -s /bin/bash me
+useradd -m -G wheel,audio,video,usb,cdrom -s /bin/bash me
 ```
 ```
 passwd me
@@ -9,6 +9,7 @@ passwd me
 ```
 emerge --ask sudo
 ```
+
 ```
 nvim /etc/sudoers
 ```
@@ -18,9 +19,18 @@ uncomment wanted line
 ```
 passwd -dl root
 ```
+## Configuring multi monitor
+```
+xrandr | grep -w connected
+```
+write scirpt by example: https://wiki.gentoo.org/wiki/SDDM
+
 ## Disk cleanup
 ```
 rm /stage3-*.tar.*
+```
+```
+emerge --deepclean
 ```
 ## Add guru gentoo overlay
 ```

@@ -146,7 +146,7 @@ eselect profile set 2
 ```
 emerge --info | grep ^USE
 ```
-use flags: "wayland -kde -libreoffice pipewire qt5 gtk bluetooth"
+use flags: "grub dbus sddm gtk pulseaudio gtk3 display-manager kde -libreoffice -gnome bluetooth"
 
 ### Set videocard drivers
 ```
@@ -201,10 +201,7 @@ eselect locale set 2
 
 ## Installing firmware and microcode
 ```
-emerge --ask sys-kernel/linux-firmware 
-```
-```
-emerge --ask sys-firmware/intel-microcode
+emerge --ask sys-kernel/linux-firmware sys-firmware/intel-microcode nvidia-drivers
 ```
 
 ## Distribution kernel
@@ -327,16 +324,12 @@ grub-install --target=x86_64-efi --efi-directory=/efi --removable
 ```
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
-
 ## Installing DE[KDE]
 ```
-USE="smart sddm networkmanager grub display-manager bluetooth grub" emerge --ask --verbose --quiet plasma-meta display-manager-init xrandr sddm kde-plasma/sddm-kcm
+USE="smart" emerge --ask --verbose --quiet kde-plasma/plasma-desktop display-manager-init xrandr sddm kde-plasma/sddm-kcm xorg-drivers x11-base/xorg-server kde-plasma/kdeplasma-addons kde-apps/kwalletmanager kde-apps/dolphin x11-misc/sddm kde-plasma/systemsettings kde-plasma/kscreen alacritty
 ```
 ```
 rc-update add elogind boot
-```
-```
-rc-service elogind start
 ```
 ```
 echo "CHECKVT=7" > /etc/conf.d/display-manager && echo 'DISPLAYMANAGER="sddm"' >> /etc/conf.d/display-manager
@@ -345,16 +338,17 @@ echo "CHECKVT=7" > /etc/conf.d/display-manager && echo 'DISPLAYMANAGER="sddm"' >
 rc-update add display-manager default
 ```
 ```
+gpasswd -a root video
+```
+```
+usermod -a -G video sddm
+```
+```
 rc-service display-manager start
 ```
-
-## Configuring multi monitor
 ```
-xrandr | grep -w connected
+rc-service elogind start
 ```
-write scirpt by example: https://wiki.gentoo.org/wiki/SDDM
-
-
 ## Rebooting
 ```
 exit
