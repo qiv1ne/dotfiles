@@ -1,5 +1,8 @@
-# [Linux(host os)](GentooStuff.md)
+# [Linux(host os)]
 ### Distro: [Gentoo](https://wiki.gentoo.org/wiki/Handbook:AMD64)
+
+## [Installing system](GentooMinimalInstallation.md)
+## [Installing software]()
 
 ### DE: KDE
 
