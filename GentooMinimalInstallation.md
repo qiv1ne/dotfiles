@@ -179,14 +179,8 @@ emerge --config sys-libs/timezone-data
 ```
 ## Configure locales
 ```
-nano /etc/locale.gen
+echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && "ru_RU.UTF-8 UTF-8" >> /etc/locale.gen
 ```
-for add english and russian locales:
-```
-en_US.UTF-8 UTF-8
-ru_RU.UTF-8 UTF-8
-```
-setting locales
 ```
 locale-gen
 ```
