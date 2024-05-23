@@ -1,4 +1,4 @@
-# [Linux(host os)]
+# Linux(host os)
 ### Distro: [Gentoo](https://wiki.gentoo.org/wiki/Handbook:AMD64)
 
 ## [Installing system](GentooMinimalInstallation.md)
