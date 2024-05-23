@@ -2,7 +2,8 @@
 ### Distro: [Gentoo](https://wiki.gentoo.org/wiki/Handbook:AMD64)
 
 ## [Installing system](GentooMinimalInstallation.md)
-## [Installing software]()
+## [Post install]()
+## [Installing bloatware]()
 
 ### DE: KDE
 
