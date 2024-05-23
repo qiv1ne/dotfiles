@@ -294,7 +294,7 @@ emerge --ask net-dialup/ppp
 ```
 #### WiFi
 ```
-emerge --ask net-wireless/iw net-wireless/wpa_supplicant
+USE="tkip" emerge --ask net-wireless/iw net-wireless/wpa_supplicant
 ```
 ## Bootloader
 ### GRUB
