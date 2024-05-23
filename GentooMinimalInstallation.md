@@ -1,6 +1,4 @@
 
-# Full install steps
-
 >[!note]
 >if WiFi then use net-setup for connecting
 
