@@ -13,21 +13,6 @@ add disk encryption
 
 emerge --ask --quiet --verbose usbutils dosfstools pciutils gentoolkit
 
-## Zsh
-
-https://wiki.gentoo.org/wiki/Zsh
-
-### oh-my-zsh
-
-https://github.com/ohmyzsh/ohmyzsh
-
-Plugins
-
-https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md
-
-https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md
-
-https://github.com/romkatv/powerlevel10k
 
 
 
