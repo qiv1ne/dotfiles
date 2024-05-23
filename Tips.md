@@ -1,14 +1,3 @@
-## Config update issue
-
-## Gentoo overlay installing
-
-## Wpa supplicant configure
-
-## Fonts installing
-
-## Virtual machines
-
-
 # Config
 ```
 emerge --ask app-portage/cfg-update
@@ -16,19 +5,6 @@ emerge --ask app-portage/cfg-update
 ```
 cfg-update -u
 ```
-
-# Overlay
-```
-
-emerge --ask app-eselect/eselect-repository
-```
-```
-eselect repository list
-```
-```
-eselect repository enable guru
-```
-
 # WiFi
 
 https://wiki.gentoo.org/wiki/Handbook:AMD64/Networking/Wireless
