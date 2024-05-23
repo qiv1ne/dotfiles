@@ -13,16 +13,6 @@ add disk encryption
 
 emerge --ask --quiet --verbose usbutils dosfstools pciutils gentoolkit
 
-## Config
-
-https://wiki.gentoo.org/wiki/Cfg-update
-
-## GURU
-
-https://wiki.gentoo.org/wiki/Eselect/Repository
-
-    eselect repository enable guru
-
 ## Zsh
 
 https://wiki.gentoo.org/wiki/Zsh
@@ -40,46 +30,6 @@ https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md
 https://github.com/romkatv/powerlevel10k
 
 
-## Display-manager
-
-https://wiki.gentoo.org/wiki/Display_manager
-
-https://wiki.gentoo.org/wiki/SDDM
-
-## Wifi
-
-https://wiki.gentoo.org/wiki/Wi-Fi
-
-### wpa_supplicant
-
-https://wiki.gentoo.org/wiki/Wpa_supplicant
-
-### Connecting
-
-https://wiki.gentoo.org/wiki/Handbook:AMD64/Networking/Wireless
-
-## Use-flag-issue
-
-https://forums.gentoo.org/viewtopic-t-1089708-start-0.html
-
-## fonts
-
-https://forums.gentoo.org/viewtopic-p-7048980.html
-
-https://forums.gentoo.org/viewtopic-t-1114772-start-0.html
-
-## vmbox
-
-https://wiki.gentoo.org/wiki/VirtualBox
-
-
-
-
-
-
-https://www.atlassian.com/git/tutorials/dotfiles
-
-[Window manager - hyprland]()
 
 [Terminal - kitty]()
 
@@ -88,18 +38,6 @@ https://www.atlassian.com/git/tutorials/dotfiles
 [Task manager - btop](https://wiki.gentoo.org/wiki/Btop)
  
 [App launcher - fuzzel](https://codeberg.org/dnkl/fuzzel)
-
-[Notification manager - Dunst](https://wiki.gentoo.org/wiki/Dunst) 
- 
-[Clipboard manager - [wl-clipboard ](https://gpo.zugaina.org/gui-apps/cliphist) + https://wiki.hyprland.org/Useful-Utilities/Clipboard-Managers/  
-
-[Panel - waybar](https://wiki.gentoo.org/wiki/Waybar)
-
-[Music - mpv](https://wiki.gentoo.org/wiki/Mpv) + https://github.com/yurihs/waybar-media
-  
-[Wallpaper manager - hyprpaper](https://wiki.gentoo.org/wiki/Hyprpaper)
-
-[Wifi - wpa_supplicant](https://wiki.gentoo.org/wiki/Wpa_supplicant)  
 
 [Shell - zsh](https://wiki.gentoo.org/wiki/Zsh)
 
@@ -143,33 +81,11 @@ Nerd font
 
 
 
-## Hyprland
-```
-emerge --ask USE="X" gui-wm/hyprland gnome-base/gsettings-desktop-schemas xdg-desktop-portal-hyprland imv dunst hyprpaper wl-clipboard doas 
-```
-```
-rc-update add seatd default
-```
-```
-chmod +x ./hypr.sh
-```
-```
-sh hypr.sh
-```
-
- kitty
-
-neovim
-
-btop
  
 ## Fuzzel
 ```
 emerge -avt gui-apps/fuzzel
 ```
-
-## waybar
-
 
 ## mpv + https://github.com/yurihs/waybar-media
 
