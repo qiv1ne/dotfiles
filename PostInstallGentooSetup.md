@@ -1,4 +1,3 @@
-# Setup after clean install
 ## Adding new user
 ```
 useradd -m -G wheel,audio,video,usb,cdrom -s /bin/bash me
@@ -11,7 +10,7 @@ emerge --ask sudo
 ```
 
 ```
-nvim /etc/sudoers
+vim /etc/sudoers
 ```
 uncomment wanted line
 
