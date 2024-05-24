@@ -343,7 +343,7 @@ rc-service elogind start
 ```
 ## Additional software
 ```
-udev
+udev sudo 
 ```
 
 ## Rebooting
