@@ -341,6 +341,11 @@ rc-service display-manager start
 ```
 rc-service elogind start
 ```
+## Additional software
+```
+udev
+```
+
 ## Rebooting
 ```
 exit
