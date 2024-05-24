@@ -73,7 +73,7 @@ emerge --ask app-shells/zsh
 ```
 emerge --ask app-shells/zsh-completions
 ```
-```
+
 
 Enable `zsh-completion` USE flag in /etc/portage/make.conf
 
