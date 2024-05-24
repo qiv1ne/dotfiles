@@ -43,7 +43,7 @@ emerge --sync guru
 ```
 ## Pipewire
 installed by default on kde
-
+all good, just install alsa-utils and change mic boost in alsamixer
 
 ## Bluetooth
 
@@ -52,6 +52,9 @@ emerge --ask --changed-use --deep @world
 emerge --ask --noreplace net-wireless/bluez
 rc-service bluetooth start
 rc-update add bluetooth default
+
+## Qemu
+
 
 ## zsh
 
