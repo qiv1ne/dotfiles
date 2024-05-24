@@ -173,6 +173,21 @@ mkdir /etc/portage/package.accept_keywords && echo "*/*::steam-overlay
 games-util/game-device-udev-rules
 sys-libs/libudev-compat" >> /etc/portage/package.accept_keywords/steam
 ```
+
+## Brave
+```
+emerge --ask app-eselect/eselect-repository dev-vcs/git
+```
+```
+eselect repository add brave-overlay git https://gitlab.com/jason.oliveira/brave-overlay.git
+```
+```
+emerge --sync brave-overlay
+```
+```
+emerge --ask www-client/brave-bin::brave-overlay
+```
+
 ```
 mkdir /etc/portage/package.license && echo "games-util/steam-launcher ValveSteamLicense" >> /etc/portage/package.license/steam
 ```
