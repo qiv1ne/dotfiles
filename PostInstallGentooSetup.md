@@ -96,6 +96,12 @@ echo "load-module module-tunnel-sink server=1.2.3.4" >> /etc/pulse/default.pa
 
 ## Bluetooth
 
+add `bluetooth` USE flag in /etc/portage/make.conf
+emerge --ask --changed-use --deep @world
+emerge --ask --noreplace net-wireless/bluez
+rc-service bluetooth start
+rc-update add bluetooth default
+
 ## zsh
 
 ## 
