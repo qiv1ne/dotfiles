@@ -219,3 +219,9 @@ mkdir /etc/portage/package.license && echo "games-util/steam-launcher ValveSteam
 ```
 emerge --ask games-util/steam-launcher
 ```
+
+## NeoVim
+
+sudo emerge --ask app-editors/neovim
+sudo USE="npm" emerge --ask --verbose --quiet --tree net-libs/nodejs
+sudo emerge --ask --verbose --quiet --tree dev-libs/tree-sitter
