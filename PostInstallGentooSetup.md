@@ -22,7 +22,9 @@ emerge --ask net-print/cups-meta
 ```
 sudo USE="cups" emerge --ask --changed-use net-fs/samba
 ```
-
+```
+sudo USE="hpijs scanner kde X python" emerge net-print/hplip
+```
 
 ## Disable root login
 ```
