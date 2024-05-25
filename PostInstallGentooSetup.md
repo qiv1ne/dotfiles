@@ -13,11 +13,16 @@ emerge --ask sudo
 vim /etc/sudoers
 ```
 ## Cups
+```
 sudo USE="zeroconf" emerge --ask net-print/cups
+```
+```
 emerge --ask net-print/cups-meta
+```
+```
 sudo USE="cups" emerge --ask --changed-use net-fs/samba
+```
 
-uncomment wanted line
 
 ## Disable root login
 ```
@@ -227,6 +232,12 @@ emerge --ask games-util/steam-launcher
 
 ## NeoVim
 
+```
 sudo emerge --ask app-editors/neovim
+```
+```
 sudo USE="npm" emerge --ask --verbose --quiet --tree net-libs/nodejs
+```
+```
 sudo emerge --ask --verbose --quiet --tree dev-libs/tree-sitter
+```
