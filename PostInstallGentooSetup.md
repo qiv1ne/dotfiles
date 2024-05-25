@@ -12,6 +12,11 @@ emerge --ask sudo
 ```
 vim /etc/sudoers
 ```
+## Cups
+sudo USE="avahi" emerge --ask net-print/cups
+emerge --ask net-print/cups-meta
+sudo USE="cups" emerge --ask --changed-use net-fs/samba
+
 uncomment wanted line
 
 ## Disable root login
