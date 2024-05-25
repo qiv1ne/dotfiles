@@ -64,7 +64,32 @@ rc-update add bluetooth default
 ```
 
 ## Qemu
-
+```
+USE="usbredir gtk policykit spice" emerge --ask --quiet --verbose --tree virt-manager qemu xf86-video-qxl app-emulation/spice spice-gtk spice-protocol net-firewall/iptables
+```
+```
+gpasswd -a me kvm
+```
+```
+gpasswd -a me libvirt
+```
+```
+rc-update add libvirtd default
+```
+```
+mkdir -p /etc/polkit-l/localauthority/50-local.d
+```
+```
+echo "[Allow group libvirt management permissions]
+Identity=unix-group:libvirt
+Action=org.libvirt.unix.manage
+ResultAny=yes
+ResultInactive=yes
+ResultActive=yes" >> /etc/polkit-l/localauthority/50-local.d/org.libvirt.unix.manage.pkla
+```
+```
+reboot
+```
 
 ## zsh
 ```
