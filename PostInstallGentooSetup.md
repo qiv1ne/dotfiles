@@ -65,7 +65,7 @@ rc-update add bluetooth default
 
 ## Qemu
 ```
-USE="usbredir gtk policykit spice" emerge --ask --quiet --verbose --tree virt-manager qemu xf86-video-qxl app-emulation/spice spice-gtk spice-protocol net-firewall/iptables
+USE="virgl usbredir gtk policykit spice" emerge --ask --quiet --verbose --tree virt-manager qemu xf86-video-qxl app-emulation/spice spice-gtk spice-protocol net-firewall/iptables
 ```
 ```
 gpasswd -a me kvm
