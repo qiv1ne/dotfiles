@@ -235,7 +235,7 @@ emerge --ask games-util/steam-launcher
 ## NeoVim
 
 ```
-sudo USE="npm" emerge --ask app-editors/neovim sys-apps/ripgrep sys-apps/fd dev-libs/tree-sitter net-libs/nodejs dev-python/pynvim luarocks php composer julia
+sudo USE="npm" emerge --ask app-editors/neovim sys-apps/ripgrep sys-apps/fd dev-libs/tree-sitter net-libs/nodejs dev-python/pynvim luarocks php composer julia dev-python/black
 ```
 ```
 sudo npm install -g neovim
