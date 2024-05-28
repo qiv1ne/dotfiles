@@ -235,8 +235,11 @@ emerge --ask games-util/steam-launcher
 ## NeoVim
 
 ```
-sudo USE="npm" emerge --ask app-editors/neovim sys-apps/ripgrep sys-apps/fd dev-libs/tree-sitter net-libs/nodejs dev-python/pynvim luarocks php composer julia dev-python/black
+sudo USE="npm" emerge --ask app-editors/neovim sys-apps/ripgrep sys-apps/fd dev-libs/tree-sitter net-libs/nodejs dev-python/pynvim luarocks php composer julia golangci-lint
 ```
 ```
 sudo npm install -g neovim
+```
+```
+sudo npm install live-server
 ```
