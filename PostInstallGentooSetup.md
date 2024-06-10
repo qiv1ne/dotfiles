@@ -206,9 +206,21 @@ virtual/libiconv abi_x86_32
 x11-libs/xcb-util-keysyms abi_x86_32" >> /etc/portage/package.use/steam
 ```
 ```
+echo "sys-libs/ncurses -gpm" >> /etc/portage/package.use/ncurses
+```
+```
+emerge --ask --changed-use --deep @world
+```
+```
 mkdir /etc/portage/package.accept_keywords && echo "*/*::steam-overlay
 games-util/game-device-udev-rules
 sys-libs/libudev-compat" >> /etc/portage/package.accept_keywords/steam
+```
+```
+mkdir /etc/portage/package.license && echo "games-util/steam-launcher ValveSteamLicense" >> /etc/portage/package.license/steam
+```
+```
+emerge --ask games-util/steam-launcher
 ```
 
 ## Brave
@@ -225,12 +237,6 @@ emerge --sync brave-overlay
 emerge --ask www-client/brave-bin::brave-overlay
 ```
 
-```
-mkdir /etc/portage/package.license && echo "games-util/steam-launcher ValveSteamLicense" >> /etc/portage/package.license/steam
-```
-```
-emerge --ask games-util/steam-launcher
-```
 
 ## NeoVim
 
