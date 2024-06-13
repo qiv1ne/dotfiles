@@ -144,7 +144,7 @@ eselect repository enable steam-overlay
 emerge --sync
 ```
 ```
-echo "x11-libs/libX11  abi_x86_32
+sudo bash -c 'echo "x11-libs/libX11  abi_x86_32
 x11-libs/libXau  abi_x86_32
 x11-libs/libxcb  abi_x86_32
 x11-libs/libXdmcp  abi_x86_32
@@ -203,7 +203,7 @@ sys-apps/systemd-utils abi_x86_32
 sys-libs/libcap abi_x86_32
 sys-libs/pam abi_x86_32
 virtual/libiconv abi_x86_32
-x11-libs/xcb-util-keysyms abi_x86_32" >> /etc/portage/package.use/steam
+x11-libs/xcb-util-keysyms abi_x86_32" >> /etc/portage/package.use/steam'
 ```
 ```
 echo "sys-libs/ncurses -gpm" >> /etc/portage/package.use/ncurses
