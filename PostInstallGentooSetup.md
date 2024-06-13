@@ -206,7 +206,7 @@ virtual/libiconv abi_x86_32
 x11-libs/xcb-util-keysyms abi_x86_32" >> /etc/portage/package.use/steam'
 ```
 ```
-echo "sys-libs/ncurses -gpm" >> /etc/portage/package.use/ncurses
+sudo bash -c 'echo "sys-libs/ncurses -gpm" >> /etc/portage/package.use/ncurses'
 ```
 ```
 emerge --ask --changed-use --deep @world
