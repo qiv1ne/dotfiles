@@ -3,7 +3,6 @@
 
 ## [Installing system](GentooMinimalInstallation.md)
 ## [Post install]()
-## [Installing bloatware]()
 
 ### DE: KDE
 
@@ -11,15 +10,15 @@
 
 Main: Brave
 
-Second: Firefox
-
-Third: links
+Second: LibreWolf
 
 #### Editors and IDE
 
 Main: NeoVim
 
 For Java: Intellij Idea
+
+For python: Pycharm
 
 
 
@@ -30,18 +29,10 @@ For official: Steam
 
 #### Other application and utils
 
-Virtual machines: Oracle VMBox
+Virtual machines: Virt-manager + Qemu + KVM
 
 Torrent manager: qBitTorrent 
 
 Communication: Discord 
 
 VPN: ProtonVPN
-
-# Windows(guest os)
-
-#### Stuff for college
-
-Image editors: Photoshop and stuff like this
-
-Document editor: Word, Excel and other
