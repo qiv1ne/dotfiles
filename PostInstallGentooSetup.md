@@ -14,16 +14,28 @@ vim /etc/sudoers
 ```
 ## Cups
 ```
-sudo USE="zeroconf" emerge --ask net-print/cups
+sudo echo "net-print/cups zeroconf" >> /etc/portage/package.use/cups
+```
+```
+sudo emerge --ask net-print/cups
 ```
 ```
 emerge --ask net-print/cups-meta
 ```
 ```
-sudo USE="cups" emerge --ask --changed-use net-fs/samba
+sudo echo "net-fs/samba cups" >> /etc/portage/package.use/samba
 ```
 ```
-sudo USE="hpijs scanner kde X python" emerge net-print/hplip
+sudo emerge --ask --changed-use net-fs/samba
+```
+```
+sudo echo "net-print/hplip hpijs
+net-print/hplip scanner
+net-print/hplip X
+net-print/hplip python" >> /etc/portage/package.use/hplip
+```
+```
+sudo emerge net-print/hplip
 ```
 
 ## Disable root login
