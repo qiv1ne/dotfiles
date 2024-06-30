@@ -202,9 +202,14 @@ emerge --ask www-client/brave-bin::brave-overlay
 
 
 ## NeoVim
-
 ```
-sudo USE="npm" emerge --ask app-editors/neovim sys-apps/ripgrep sys-apps/fd dev-libs/tree-sitter net-libs/nodejs dev-python/pynvim luarocks php composer julia golangci-lint
+sudo echo "net-libs/nodejs npm" >> /etc/portage/package.use/nodejs
+```
+```
+sudo emerge =app-editors/neovim-0.10.0 
+```
+```
+sudo emerge --ask sys-apps/ripgrep sys-apps/fd dev-libs/tree-sitter dev-python/pynvim luarocks php composer julia golangci-lint
 ```
 ```
 sudo npm install -g neovim
