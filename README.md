@@ -10,29 +10,26 @@
 
 Main: Brave
 
-Second: LibreWolf
+Second: Zen 
 
 #### Editors and IDE
 
 Main: NeoVim
 
-For Java: Intellij Idea
+Java: Intellij Idea
 
-For python: Pycharm
-
-
+C#: VS
 
 #### Games
 For cracked: [Lutris](https://wiki.gentoo.org/wiki/Lutris)
+
+Bottles
 
 For official: Steam
 
 #### Other application and utils
 
-Virtual machines: Virt-manager + Qemu + KVM
-
 Torrent manager: qBitTorrent 
 
 Communication: Discord 
 
-VPN: ProtonVPN
