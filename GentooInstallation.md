@@ -177,6 +177,7 @@ For newer firmware mayby need to install sof-firmware
 ```
 emerge --ask sys-firmware/sof-firmware
 ```
+# TODO: change after install
 # Secure boot
 set USE flag `secureboot` in /etc/portage/make.conf
 
@@ -195,43 +196,145 @@ To create keyfiles protected with openssl
 ```
 openssl req -new -x509 -newkey rsa:2048 -subj "/CN=platform key/" -keyout PK.key -out PK.crt -days 3650 -nodes -sha256
 ```
+```
 openssl req -new -x509 -newkey rsa:2048 -subj "/CN=key exchange key/" -keyout KEK.key -out KEK.crt -days 3650 -nodes -sha256
+```
+```
 openssl req -new -x509 -newkey rsa:2048 -subj "/CN=kernel signing key/" -keyout db.key -out db.crt -days 3650 -nodes -sha256
-Creating new Signature List
 ```
-for key_type in PK KEK db dbx; do cert-to-efi-sig-list -g $(< uuid.txt) ${key_type}.crt ${key_type}.esl; done
 ```
-cd ..
-Copying the signature lists
-cp custom_config/*.esl .
-Copying the Platform Key
-cp custom_config/PK.esl .
-
-Signing Signature List
+chmod -v 400 *.key
+UUID=#(uuidgen)
+```
+```
+cert-to-efi-sig-list -g $UUID PK.crt PK.esl
+sign-efi-sig-list -k PK.key -c PK.crt PK PK.esl PK.auth
+```
+```
+cert-to-efi-sig-list -g $UUID KEK.crt KEK.esl
+sign-efi-sig-list -a -k PK.key -c PK.crt KEK KEK.esl KEK.auth
+```
+```
+cert-to-efi-sig-list -g $UUID db.crt db.esl
+```
+```
+sign-efi-sig-list -a -k KEK.key -c KEK.crt db db.esl db.auth
+```
+```
+sign-efi-sig-list -k KEK.key -c KEK.crt dbx dbx.esl dbx.auth
+```
+```
+sign-efi-sig-list -k KEK.key -c KEK.crt dbc old_dbx.esl old_dbx.auth
+```
+```
+openssl x509 -outform DER -in PK.crt -out PK.cer
+```
+```
+openssl x509 -outform DER -in KEK.crt -out KEK.cer
+```
+```
+openssl x509 -outform DER -in db.crt -out db.cer
+```
+```
+cat old_KEK.esl KEK.esl > compound_KEK.esl
+```
+```
+cat old_db.esl db.esl > compound_db.esl
+```
+```
+sign-efi-sig-list -k PK.key -c PK.crt KEK compound_KEK.esl compound_KEK.auth
+```
+```
+sign-efi-sig-list -k KEK.key -c KEK.crt db compound_db.esl compound_db.auth
 
 ```
-sign-efi-sig-list -k custom_config/PK.key -c custom_config/PK.crt PK PK.esl PK.auth
+Now we need to reboot system and turn on secure boot
+
+When you login command
 ```
-
-Key Exchange Keys
-sign-efi-sig-list -k custom_config/PK.key -c custom_config/PK.crt KEK KEK.esl KEK.auth
-
-Signature Databases
-for db_type in db dbx; do sign-efi-sig-list -k custom_config/KEK.key -c custom_config/KEK.crt $db_type ${db_type}.esl ${db_type}.auth ; done
-Installing the Key Exchange Key
-efi-updatevar -e -f KEK.esl KEK
-Installing the Database Keys
-for db_type in db dbx; do sudo efi-updatevar -e -f ${db_type}.esl $db_type; done
-Installing the Platform Key
+efi-readvar
+```
+should say that variables has no entries
+```
+efi-updatevar -e -f compound_db.esl db
+```
+```
+efi-updatevar -e -f compound_KEK.esl KEK
+```
+```
 efi-updatevar -f PK.auth PK
+```
 
-## Kernel
-### Distribution kernel
+Now when you `efi-readvar` it should print many signatures and hashes
+
+Now let's check our variables
+```
+efi-readvar -v PK -o new PK.esl
+```
+```
+efi-readvar -v KEK -o new_KEK.esl
+```
+```
+efi-readvar -v db -o new_db.esl
+```
+```
+efi-readvar -v dbx -o new_dbx.esl
+```
+
+Now we will mount pation and sign kernel
+```
+mount /dev/sda1
+```
+```
+cd /boot/efi
+```
+```
+cd EFI
+```
+```
+cd Boot
+```
+```
+mv bootx64.efi bootx64-unsigned.efi
+```
+```
+sbsign --key /etc/efikeys/db.key --cert /etc/efikeys/db.crt bootx64-unsigned.efi --output bootx64.efi
+```
+```
+cd ../systemd/
+```
+```
+mv systemd-bootx64.efi systemd-bootx64-unsigned.efi
+```
+```
+sbsign --key /etc/efikeys/db.key --cert /etc/efikeys/db.crt --output systemd-bootx64.efi
+```
+```
+cd ../gentoo/
+```
+```
+mv vmlinuz-*.efi vmlinuz-*-unsigned.efi
+```
+```
+cd ../gentoo/
+```
+```
+sbsign --key /etc/efikeys/db.key --cert /etc/efikeys/db.crt vmlinuz-*-unsigned.efi --output vmlinuz-*.efi
+```
+Now reboot and enable secure boot
+
+To check SecureBoot status use this command
+```
+mokutil --sb-state
+```
+# Kernel
+## Distribution kernel
 ```
 echo "sys-kernel/installkernel dracut" >>  /etc/portage/package.use/installkernel
 ```
+I prefer binnary package cause of i dont change any settings in kernel and compile time not necessary
 ```
-emerge --ask sys-kernel/gentoo-kernel
+emerge --ask sys-kernel/gentoo-kernel-bin
 ```
 ```
 emerge --depclean
@@ -239,7 +342,6 @@ emerge --depclean
 ```
 emerge --ask sys-kernel/installkernel
 ```
-
 
 ### Select kernel
 ```
@@ -259,13 +361,20 @@ vim /etc/fstab
 ```
 write by [example](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/System)
 
-## Networking
+I use this params for volumes:
+
+1. For btrfs: btrfs,noatime,defaults,autodefrag,compress-force=zstd:1
+# Networking
 
 ### Hostname
+[!note]
+> for systemd use
+> ``` hostnamectl hostname tux ```
 ```
 echo {name} > /etc/hostname
 ```
-### Network
+
+### IP
 ```
 emerge --ask net-misc/dhcpcd
 ```
@@ -280,9 +389,21 @@ rc-service dhcpcd start
 ```
 passwd
 ```
+### Init and boot configuration
+```
+systemd-machine-id-setup
+```
+```
+systemd-firstboot --prompt
+```
+```
+systemctl preset-all --preset-mode=enable-only
+```
 ### [Other configuration](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/System)
 ## Tools
 ### Loggin daemon
+[!note]
+> for systemd not needed
 ```
 emerge --ask app-admin/sysklogd
 ```
@@ -290,6 +411,8 @@ emerge --ask app-admin/sysklogd
 rc-update add sysklogd default
 ```
 ### Cron daemon
+[!note]
+> for systemd not needed
 ```
 emerge --ask sys-process/cronie
 ```
@@ -301,10 +424,16 @@ rc-update add cronie default
 emerge --ask sys-apps/mlocate
 ```
 ### SSH
+[!note]
+> for systemd use
+> ``` systemctl enable sshd ```
 ```
 rc-update add sshd default
 ```
 ### Time synchronization
+[!note]
+> systemd
+> ``` systemctl enable systemd-timesyncd.service ```
 ```
 emerge --ask net-misc/chrony
 ```
@@ -313,16 +442,19 @@ rc-update add chronyd default
 ```
 ### File system tools
 ```
-emerge --ask sys-block/io-scheduler-udev-rules 	sys-fs/xfsprogs sys-fs/e2fsprogs 	sys-fs/dosfstools	sys-fs/btrfs-progs ntfs-3g
+emerge --ask sys-block/io-scheduler-udev-rules sys-fs/xfsprogs 	sys-fs/e2fsprogs 	sys-fs/dosfstools 	sys-fs/btrfs-progs 	sys-fs/zfs 	sys-fs/jfsutils ntfs3g
 ```
 ### Networking tools
 #### Ethernet
 ```
 emerge --ask net-dialup/ppp
 ```
-#### WiFi
+#### Wi-Fi
 ```
-USE="tkip" emerge --ask net-wireless/iw net-wireless/wpa_supplicant
+echo "net-wireless/wpa_supplicant tkip" >> /etc/portage/package.use/wpa_supplicant
+```
+```
+emerge --ask net-wireless/iw net-wireless/wpa_supplicant
 ```
 ## Bootloader
 ### GRUB
@@ -332,61 +464,69 @@ echo "sys-kernel/installkernel grub" >> /etc/portage/package.use/installkernel
 ```
 emerge --ask sys-kernel/installkernel
 ```
+Use this option if you want to use EFI
 ```
 echo 'GRUB_PLATFORMS="efi-64"' >> /etc/portage/make.conf
 ```
 ```
 emerge --ask --verbose sys-boot/grub
 ```
+[!note]
+> for bios
+> ``` grub-install --target=i386-pc /dev/sda ```
 ```
 grub-install --target=x86_64-efi --efi-directory=/efi --removable
 ```
 ```
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
-## Installing DE[KDE]
+## Installing de/wm
+If using open-rc than do this steps
 ```
-USE="smart" emerge --ask --verbose --quiet kde-plasma/plasma-desktop display-manager-init xrandr sddm kde-plasma/sddm-kcm xorg-drivers x11-base/xorg-server kde-plasma/kdeplasma-addons kde-apps/kwalletmanager kde-apps/dolphin x11-misc/sddm kde-plasma/systemsettings kde-plasma/kscreen alacritty
+emerge elogind
 ```
 ```
 rc-update add elogind boot
 ```
 ```
-echo "CHECKVT=7" > /etc/conf.d/display-manager && echo 'DISPLAYMANAGER="sddm"' >> /etc/conf.d/display-manager
-```
-```
-rc-update add display-manager default
-```
-```
 gpasswd -a root video
 ```
+## Install some usefull packages
 ```
-usermod -a -G video sddm
+emerge sudo udev pciutils usbutils cfg-update gentoolkit eselect-repository
+```
+# Adding new user
+```
+useradd -m -G wheel,audio,video,usb -s /bin/bash me
 ```
 ```
-rc-service display-manager start
+passwd me
 ```
 ```
-rc-service elogind start
+vim /etc/sudoers
 ```
-## Additional software
+## Reboot
 ```
-udev sudo 
+exit && umount /dev/mapper/root && cryptsetup luksClose root && cd && umount -l /mnt/gentoo/dev{/shm,/pts,} &&  umount -R /mnt/gentoo && reboot
 ```
 
-## Finalazind and reboot
+# Post install
+
+
+## Disable root login
 ```
-exit && umount /dev/mapper/root && cryptsetup luksClose root &&
+passwd -dl root
 ```
+## Disk cleanup
 ```
-cd
-```
-```
-umount -l /mnt/gentoo/dev{/shm,/pts,}
-```
-```
-umount -R /mnt/gentoo
+rm /stage3-*.tar.*
 ```
 ```
-reboot
+emerge --deepclean
 ```
+
+## Neovim
+
+dependencies
+app-emacs/rg dev-libs/tree-sitter dev-lua/luarocks dev-python/pynvim dev-python/tree-sitter media-fonts/fontawesome media-fonts/noto-emoji sys-apps/fd sys-apps/ripgrep neovim
+

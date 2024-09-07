@@ -1,17 +1,3 @@
-## Adding new user
-```
-useradd -m -G wheel,audio,video,usb,cdrom -s /bin/bash me
-```
-```
-passwd me
-```
-```
-emerge --ask sudo
-```
-
-```
-vim /etc/sudoers
-```
 ## Cups
 ```
 sudo echo "net-print/cups zeroconf" >> /etc/portage/package.use/cups
@@ -39,17 +25,6 @@ rc-service cupsd start
 ```
 ```
 rc-update add cupsd default
-```
-## Disable root login
-```
-passwd -dl root
-```
-## Disk cleanup
-```
-rm /stage3-*.tar.*
-```
-```
-emerge --deepclean
 ```
 ## Add guru gentoo overlay
 ```

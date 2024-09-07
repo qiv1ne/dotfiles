@@ -9,13 +9,6 @@ for configuring buttons using [xev](https://packages.gentoo.org/packages/x11-app
 add disk encryption with LUKS
 
 
-## Useful packages
-
-emerge --ask --quiet --verbose usbutils dosfstools pciutils gentoolkit
-
-
-
-
 [Terminal - kitty]()
 
 [Editor - neovim](https://wiki.gentoo.org/wiki/Neovim)
@@ -59,27 +52,7 @@ Games - [Lutris]() + [Steam]()
     sudo cp -r .fonts/* /use/share/fonts/
 
 
-## Installing dependencies for other stuff
-
-
-Neovim 0.9.2+
-Nerd font
-
-    neovim git npm python curl wget unzip tar gzip cargo go
-
-
-
- 
-## Fuzzel
-```
-emerge -avt gui-apps/fuzzel
-```
-
-## mpv + https://github.com/yurihs/waybar-media
-
 ## zsh
-
-## dhcpcd_ui
 
 ## dolphin 
 
