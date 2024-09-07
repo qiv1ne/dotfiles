@@ -2,11 +2,11 @@
 
 power modes: [cpu](https://github.com/AdnanHodzic/auto-cpufreq) + [tlp for battery](https://wiki.gentoo.org/wiki/Power_management/Guide)
 
-[zram](https://wiki.gentoo.org/wiki/Zram) instead of swapq
+[zswap](https://wiki.gentoo.org/wiki/Zswap) over swap
 
 for configuring buttons using [xev](https://packages.gentoo.org/packages/x11-apps/xev), [forum](https://forums.gentoo.org/viewtopic-p-6909782.html)
 
-add disk encryption 
+add disk encryption with LUKS
 
 
 ## Useful packages
@@ -35,7 +35,10 @@ emerge --ask --quiet --verbose usbutils dosfstools pciutils gentoolkit
 
 [Archive manager - ark](https://packages.gentoo.org/packages/kde-apps/ark)  
 
-Web browser - [qutebrowser](https://wiki.gentoo.org/wiki/Qutebrowser) + [brave](https://wiki.gentoo.org/wiki/Brave) + [Zen browser]()
+Web browsers:
+ 1. [Qutebrowser](https://wiki.gentoo.org/wiki/Qutebrowser) 
+2. [Brave](https://wiki.gentoo.org/wiki/Brave) 
+3. [Zen](https://zen-browser.app/download)
 
 [Audio - audacity](https://wiki.gentoo.org/wiki/Audacity)  
 
