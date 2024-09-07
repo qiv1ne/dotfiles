@@ -1,3 +1,5 @@
+# [Dotfiles](Dotfiles/dots.md)
+# [Install guide]()
 # Linux(host os)
 ### Distro: [Gentoo](https://wiki.gentoo.org/wiki/Handbook:AMD64)
 
