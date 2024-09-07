@@ -35,7 +35,7 @@ emerge --ask --quiet --verbose usbutils dosfstools pciutils gentoolkit
 
 [Archive manager - ark](https://packages.gentoo.org/packages/kde-apps/ark)  
 
-Web browser - [qutebrowser](https://wiki.gentoo.org/wiki/Qutebrowser) + [brave](https://wiki.gentoo.org/wiki/Brave)  
+Web browser - [qutebrowser](https://wiki.gentoo.org/wiki/Qutebrowser) + [brave](https://wiki.gentoo.org/wiki/Brave) + [Zen browser]()
 
 [Audio - audacity](https://wiki.gentoo.org/wiki/Audacity)  
 
@@ -45,9 +45,9 @@ Web browser - [qutebrowser](https://wiki.gentoo.org/wiki/Qutebrowser) + [brave](
 
 Virual machine - KVM + [QEMU](https://wiki.gentoo.org/wiki/QEMU) + [Virt-Manager](https://wiki.gentoo.org/wiki/Virt-manager)
 
-Games - [Lutris]() + [Steam]()
+want to pass GPU to qemu/kvm with this guide https://github.com/bryansteiner/gpu-passthrough-tutorial
 
-Browser - [Brave]() + [Tor]()
+Games - [Lutris]() + [Steam]()
 
 [Fonts](#)
 
