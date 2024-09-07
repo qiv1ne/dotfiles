@@ -21,11 +21,9 @@ Java: Intellij Idea
 C#: VS
 
 #### Games
-For cracked: [Lutris](https://wiki.gentoo.org/wiki/Lutris)
+For cracked: [Lutris](https://wiki.gentoo.org/wiki/Lutris) and [Bottles](https://usebottles.com/download/)
 
-Bottles
-
-For official: Steam
+For official: [Steam](#Steam)
 
 #### Other application and utils
 
