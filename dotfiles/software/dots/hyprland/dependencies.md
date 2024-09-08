@@ -1,0 +1,15 @@
+app-misc/brightnessctl
+gnome-extra/nm-applet
+gui-apps/hyprpaper
+gui-apps/waybar
+gui-apps/wl-clipboard
+gui-apps/wofi
+gui-wm/hyprland
+dev-libs/libappindicator
+kde-apps/dolphin
+media-fonts/fontawesome
+media-fonts/noto-emoji
+media-sound/cava
+media-sound/pavucontrol
+net-wireless/blueman
+x11-terms/kitty
