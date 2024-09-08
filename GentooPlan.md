@@ -1,4 +1,4 @@
-# Gentoo plan
+# Gentoo setup
 
 power modes: [cpu](https://github.com/AdnanHodzic/auto-cpufreq) + [tlp for battery](https://wiki.gentoo.org/wiki/Power_management/Guide)
 
@@ -15,25 +15,7 @@ add disk encryption with LUKS
 
 [Task manager - btop](https://wiki.gentoo.org/wiki/Btop)
  
-[App launcher - fuzzel](https://codeberg.org/dnkl/fuzzel)
-
 [Shell - zsh](https://wiki.gentoo.org/wiki/Zsh)
-
-#### Bloatware 
-[Network management - dhcpcd_ui](https://wiki.gentoo.org/wiki/Dhcpcd-ui)  
-
-[File manager - dolphin](https://wiki.gentoo.org/wiki/Dolphin)  
-
-[Torrent client - qbittorrent](https://wiki.gentoo.org/wiki/QBittorrent)  
-
-[Archive manager - ark](https://packages.gentoo.org/packages/kde-apps/ark)  
-
-Web browsers:
- 1. [Qutebrowser](https://wiki.gentoo.org/wiki/Qutebrowser) 
-2. [Brave](https://wiki.gentoo.org/wiki/Brave) 
-3. [Zen](https://zen-browser.app/download)
-
-[Audio - audacity](https://wiki.gentoo.org/wiki/Audacity)  
 
 [Video player - vlc](https://wiki.gentoo.org/wiki/VLC)
  

@@ -177,156 +177,6 @@ For newer firmware mayby need to install sof-firmware
 ```
 emerge --ask sys-firmware/sof-firmware
 ```
-# TODO: change after install
-# Secure boot
-set USE flag `secureboot` in /etc/portage/make.conf
-
-for creating keys and usingn secure boot need this packages:
-```
-emerge  app-crypt/efitools app-crypt/sbsigntools dev-libs/openssl
-```
-Backup keys for restore it in bad case
-```
-mkdir -p -v /etc/efikeys && cd /etc/efikeys && chmod 700 /etc/efikeys
-```
-```
-efi-readvar -v PK -o old_PK.esl && efi-readvar -v KEK -o old_KEK.esl && efi-readvar -v db -o old_db.esl  && efi-readvar -v dbx -o old_dbx.esl
-```
-To create keyfiles protected with openssl
-```
-openssl req -new -x509 -newkey rsa:2048 -subj "/CN=platform key/" -keyout PK.key -out PK.crt -days 3650 -nodes -sha256
-```
-```
-openssl req -new -x509 -newkey rsa:2048 -subj "/CN=key exchange key/" -keyout KEK.key -out KEK.crt -days 3650 -nodes -sha256
-```
-```
-openssl req -new -x509 -newkey rsa:2048 -subj "/CN=kernel signing key/" -keyout db.key -out db.crt -days 3650 -nodes -sha256
-```
-```
-chmod -v 400 *.key
-UUID=#(uuidgen)
-```
-```
-cert-to-efi-sig-list -g $UUID PK.crt PK.esl
-sign-efi-sig-list -k PK.key -c PK.crt PK PK.esl PK.auth
-```
-```
-cert-to-efi-sig-list -g $UUID KEK.crt KEK.esl
-sign-efi-sig-list -a -k PK.key -c PK.crt KEK KEK.esl KEK.auth
-```
-```
-cert-to-efi-sig-list -g $UUID db.crt db.esl
-```
-```
-sign-efi-sig-list -a -k KEK.key -c KEK.crt db db.esl db.auth
-```
-```
-sign-efi-sig-list -k KEK.key -c KEK.crt dbx dbx.esl dbx.auth
-```
-```
-sign-efi-sig-list -k KEK.key -c KEK.crt dbc old_dbx.esl old_dbx.auth
-```
-```
-openssl x509 -outform DER -in PK.crt -out PK.cer
-```
-```
-openssl x509 -outform DER -in KEK.crt -out KEK.cer
-```
-```
-openssl x509 -outform DER -in db.crt -out db.cer
-```
-```
-cat old_KEK.esl KEK.esl > compound_KEK.esl
-```
-```
-cat old_db.esl db.esl > compound_db.esl
-```
-```
-sign-efi-sig-list -k PK.key -c PK.crt KEK compound_KEK.esl compound_KEK.auth
-```
-```
-sign-efi-sig-list -k KEK.key -c KEK.crt db compound_db.esl compound_db.auth
-
-```
-Now we need to reboot system and turn on secure boot
-
-When you login command
-```
-efi-readvar
-```
-should say that variables has no entries
-```
-efi-updatevar -e -f compound_db.esl db
-```
-```
-efi-updatevar -e -f compound_KEK.esl KEK
-```
-```
-efi-updatevar -f PK.auth PK
-```
-
-Now when you `efi-readvar` it should print many signatures and hashes
-
-Now let's check our variables
-```
-efi-readvar -v PK -o new PK.esl
-```
-```
-efi-readvar -v KEK -o new_KEK.esl
-```
-```
-efi-readvar -v db -o new_db.esl
-```
-```
-efi-readvar -v dbx -o new_dbx.esl
-```
-
-Now we will mount pation and sign kernel
-```
-mount /dev/sda1
-```
-```
-cd /boot/efi
-```
-```
-cd EFI
-```
-```
-cd Boot
-```
-```
-mv bootx64.efi bootx64-unsigned.efi
-```
-```
-sbsign --key /etc/efikeys/db.key --cert /etc/efikeys/db.crt bootx64-unsigned.efi --output bootx64.efi
-```
-```
-cd ../systemd/
-```
-```
-mv systemd-bootx64.efi systemd-bootx64-unsigned.efi
-```
-```
-sbsign --key /etc/efikeys/db.key --cert /etc/efikeys/db.crt --output systemd-bootx64.efi
-```
-```
-cd ../gentoo/
-```
-```
-mv vmlinuz-*.efi vmlinuz-*-unsigned.efi
-```
-```
-cd ../gentoo/
-```
-```
-sbsign --key /etc/efikeys/db.key --cert /etc/efikeys/db.crt vmlinuz-*-unsigned.efi --output vmlinuz-*.efi
-```
-Now reboot and enable secure boot
-
-To check SecureBoot status use this command
-```
-mokutil --sb-state
-```
 # Kernel
 ## Distribution kernel
 ```
@@ -515,18 +365,217 @@ exit && umount /dev/mapper/root && cryptsetup luksClose root && cd && umount -l 
 
 ## Disable root login
 ```
-passwd -dl root
+sudo passwd -dl root
 ```
 ## Disk cleanup
 ```
-rm /stage3-*.tar.*
+sudo rm /stage3-*.tar.*
 ```
 ```
-emerge --deepclean
+sudo emerge --deepclean
 ```
 
+## Installing other software
+
+```
+sudo emerge --ask --quiet --verbose --tree kitty btop dolphin qbittorrent ark vlc gparted
+```
+## Bluetooth
+Set global USE flag "bluetooth" in make.conf
+```
+emerge --ask --noreplace net-wireless/bluez
+```
+[!note]
+> for systemd
+> ``` sudo systemctl enable bluetooth && sudo systemctl start bluetooth ```
+```
+rc-service bluetooth start
+```
+```
+rc-update add bluetooth default
+```
+## Fonts
+```
+sudo mv ./dotfiles/fonts ~/.fonts && sudo mv ./dotfiles/fonts ~/.local/share/
+```
+## Guru
+```
+emerge --ask  app-eselect/eselect-repository
+```
+```
+eselect repository enable guru
+```
+```
+emerge --sync guru
+```
 ## Neovim
 
 dependencies
-app-emacs/rg dev-libs/tree-sitter dev-lua/luarocks dev-python/pynvim dev-python/tree-sitter media-fonts/fontawesome media-fonts/noto-emoji sys-apps/fd sys-apps/ripgrep neovim
+```
+sudo emerge --ask app-emacs/rg dev-libs/tree-sitter dev-lua/luarocks dev-python/pynvim dev-python/tree-sitter media-fonts/fontawesome media-fonts/noto-emoji sys-apps/fd sys-apps/ripgrep neovim
+```
+```
+sudo mv -r ./dotfiles/software/dots/soft/nvim ~/.config/
+```
 
+## Browsers
+
+### Brave
+```
+sudo eselect repository add brave-overlay git https://gitlab.com/jason.oliveira/brave-overlay.git
+```
+```
+sudo emerge --sync brave-overlay
+```
+```
+sudo emerge --ask www-client/brave-bin::brave-overlay
+```
+
+### Zen browser
+Install [flatpak](#Flatpak)
+download Zen flatpak realese and install https://zen-browser.app/download
+
+### Qutebrowser
+```
+sudo echo "www-client/qutebrowser adblock" >> /etc/portage/package.use/qutebrowser
+```
+```
+sudo emerge --ask www-client/qutebrowser
+```
+
+### Tor
+```
+sudo eselect repository enable torbrowser
+```
+```
+sudo emerge --sync torbrowser
+```
+```
+sudo emerge --ask www-client/torbrowser-launcher
+```
+
+## Flatpak
+
+```
+emerge --ask sys-apps/flatpak
+```
+
+Flatseal let you change application permissions
+```
+sudo flatpak install com.github.tchx84.Flatseal
+```
+
+## Zswap
+
+Write this line in /etc/default/grub
+```
+GRUB_CMDLINE_LINUX="zswap.enabled=1 zswap.compressor=lz4"
+```
+
+## Zsh
+
+```
+sudo emerge --ask app-shells/zsh
+```
+```
+sudo emerge --ask app-shells/zsh-completions app-shells/gentoo-zsh-completions 
+```
+```
+sudo mv ./dotfiles/software/dots/shells/zsh ~/
+```
+## Qemu/KVM with virt-manager
+
+Set use flags for qemu and rebuild it
+```
+sudo echo "app-emulation/qemu opengl alsa gtk keyutils ncurses pipewire plugins spice udev usb usbredir virgl vte zstd" >> /etc/portage/package.use/qemu && sudo emerge qemu
+```
+Set use flags for libvirt and rebuild it
+```
+sudo echo "app-emulation/libvirt udev qemu virt-network nfs nbd parted policykit pcap numa fuse macvtap vepa" >> /etc/portage/package.use/libvirt && sudo emerge libvirt
+```
+Set use flags for virt-manager and rebuild it
+```
+sudo echo "app-emulation/virt-manager gui policykit" >> /etc/portage/package.use/virt-manager && sudo emerge virt-manager
+```
+```
+gpasswd -a me kvm && gpasswd -a me libvirt
+```
+[!note]
+> for systemd 
+> ```sudo systemctl enable libvirtd && sudo systemctl start libvirtd ```
+```
+rc-update add libvirtd default
+```
+```
+mkdir -p /etc/polkit-l/localauthority/50-local.d
+```
+```
+echo "[Allow group libvirt management permissions]
+Identity=unix-group:libvirt
+Action=org.libvirt.unix.manage
+ResultAny=yes
+ResultInactive=yes
+ResultActive=yes" >> /etc/polkit-l/localauthority/50-local.d/org.libvirt.unix.manage.pkla
+```
+```
+reboot
+```
+## Steam
+
+```
+sudo emerge --ask games-util/game-device-udev-rules
+```
+```
+sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+```
+```
+sudo flatpak install flathub com.valvesoftware.Steam
+```
+```
+sudo flatpak run com.valvesoftware.Steam
+```
+## Discord
+```
+sudo flatpak install flathub com.discordapp.Discord
+```
+## Lutris
+```
+emerge --ask games-util/lutris
+```
+```
+echo "#Lutris multilib dependencies
+media-libs/vulkan-loader abi_x86_32
+media-libs/vulkan-layers abi_x86_32
+media-libs/freetype abi_x86_32
+media-libs/libpng abi_x86_32
+net-libs/gnutls abi_x86_32
+media-libs/libsdl2 abi_x86_32" >> /etc/portage/package.use/lutris
+```
+```
+emerge --ask --changed-use --deep @world
+```
+
+## Bottles
+```
+flatpak install flathub com.usebottles.bottles
+```
+
+## Power managment
+```
+sudo emerge --ask sys-power/thermald cpupower
+```
+```
+systemctl enable thermald
+```
+```
+emerge --ask sys-power/tlp
+```
+```
+systemctl enable --now tlp
+```
+```
+sudo eselect repository enable gentoo-zh && sudo emerge --sync gentoo-zh
+```
+```
+sudo emerge tlpui
+```
