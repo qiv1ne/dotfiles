@@ -191,9 +191,6 @@ emerge --ask sys-kernel/gentoo-kernel-bin
 ```
 emerge --depclean
 ```
-```
-emerge --ask sys-kernel/installkernel
-```
 
 ### Select kernel
 ```
