@@ -157,7 +157,7 @@ ln -sf ../usr/share/zoneinfo/Europe/Brussels /etc/localtime
 ```
 ## Configure locales
 ```
-echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && "ru_RU.UTF-8 UTF-8" >> /etc/locale.gen
+echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && echo "ru_RU.UTF-8 UTF-8" >> /etc/locale.gen
 ```
 ```
 locale-gen
