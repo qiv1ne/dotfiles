@@ -47,8 +47,8 @@ Change make.conf like mine. Need to set:
 ```
 vim /mnt/gentoo/etc/portage/make.conf
 ```
-
 [My make.conf](dotfiles/portage/make.conf)
+
 
 Copying resolv.conf for internet work
 ```
@@ -230,7 +230,7 @@ systemctl preset-all --preset-mode=enable-only
 ### [Other configuration](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/System)
 ## Tools
 ### Loggin daemon
-[!note]
+> [!note]
 > for systemd not needed
 ```
 emerge --ask app-admin/sysklogd
@@ -239,7 +239,7 @@ emerge --ask app-admin/sysklogd
 rc-update add sysklogd default
 ```
 ### Cron daemon
-[!note]
+> [!note]
 > for systemd not needed
 ```
 emerge --ask sys-process/cronie
@@ -252,14 +252,14 @@ rc-update add cronie default
 emerge --ask sys-apps/mlocate
 ```
 ### SSH
-[!note]
+> [!note]
 > for systemd use
 > ``` systemctl enable sshd ```
 ```
 rc-update add sshd default
 ```
 ### Time synchronization
-[!note]
+> [!note]
 > systemd
 > ``` systemctl enable systemd-timesyncd.service ```
 ```
@@ -268,7 +268,7 @@ emerge --ask net-misc/chrony
 ```
 rc-update add chronyd default
 ```
-### File system tools
+### File system drivers and tools
 ```
 emerge --ask sys-block/io-scheduler-udev-rules sys-fs/xfsprogs 	sys-fs/e2fsprogs 	sys-fs/dosfstools 	sys-fs/btrfs-progs 	sys-fs/zfs 	sys-fs/jfsutils ntfs3g
 ```
@@ -299,7 +299,7 @@ echo 'GRUB_PLATFORMS="efi-64"' >> /etc/portage/make.conf
 ```
 emerge --ask --verbose sys-boot/grub
 ```
-[!note]
+> [!note]
 > for bios
 > ``` grub-install --target=i386-pc /dev/sda ```
 ```
@@ -308,7 +308,7 @@ grub-install --target=x86_64-efi --efi-directory=/efi --removable
 ```
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
-## Installing de/wm
+## Preparing for de/wm
 If using open-rc than do this steps
 ```
 emerge elogind
@@ -335,11 +335,13 @@ vim /etc/sudoers
 ```
 ## Reboot
 ```
-exit && umount /dev/mapper/root && cryptsetup luksClose root && cd && umount -l /mnt/gentoo/dev{/shm,/pts,} &&  umount -R /mnt/gentoo && reboot
+exit
 ```
-
+```
+cd && umount -l /mnt/gentoo/dev{/shm,/pts,} &&  umount -R /mnt/gentoo && reboot
+```
+Load your new system
 # Post install
-
 
 ## Disable root login
 ```
@@ -363,7 +365,7 @@ Set global USE flag "bluetooth" in make.conf
 ```
 emerge --ask --noreplace net-wireless/bluez
 ```
-[!note]
+> [!note]
 > for systemd
 > ``` sudo systemctl enable bluetooth && sudo systemctl start bluetooth ```
 ```
@@ -374,17 +376,11 @@ rc-update add bluetooth default
 ```
 ## Fonts
 ```
-sudo mv ./dotfiles/fonts ~/.fonts && sudo mv ./dotfiles/fonts ~/.local/share/
+sudo cp ./dotfiles/fonts ~/.fonts && sudo mv ./dotfiles/fonts ~/.local/share/
 ```
 ## Guru
 ```
-emerge --ask  app-eselect/eselect-repository
-```
-```
-eselect repository enable guru
-```
-```
-emerge --sync guru
+emerge --ask  app-eselect/eselect-repository --newuse && eselect repository enable guru && emerge --sync guru
 ```
 ## Neovim
 
@@ -395,6 +391,18 @@ sudo emerge --ask app-emacs/rg dev-libs/tree-sitter dev-lua/luarocks dev-python/
 ```
 sudo mv -r ./dotfiles/software/dots/soft/nvim ~/.config/
 ```
+
+## Flatpak
+
+```
+emerge --ask sys-apps/flatpak
+```
+
+Flatseal let you change application permissions
+```
+sudo flatpak install com.github.tchx84.Flatseal
+```
+
 
 ## Browsers
 
@@ -431,18 +439,6 @@ sudo emerge --sync torbrowser
 ```
 sudo emerge --ask www-client/torbrowser-launcher
 ```
-
-## Flatpak
-
-```
-emerge --ask sys-apps/flatpak
-```
-
-Flatseal let you change application permissions
-```
-sudo flatpak install com.github.tchx84.Flatseal
-```
-
 ## Zswap
 
 Write this line in /etc/default/grub
@@ -478,7 +474,7 @@ sudo echo "app-emulation/virt-manager gui policykit" >> /etc/portage/package.use
 ```
 gpasswd -a me kvm && gpasswd -a me libvirt
 ```
-[!note]
+> [!note]
 > for systemd 
 > ```sudo systemctl enable libvirtd && sudo systemctl start libvirtd ```
 ```
@@ -504,10 +500,7 @@ reboot
 sudo emerge --ask games-util/game-device-udev-rules
 ```
 ```
-sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-```
-```
-sudo flatpak install flathub com.valvesoftware.Steam
+sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo && sudo flatpak install flathub com.valvesoftware.Steam
 ```
 ```
 sudo flatpak run com.valvesoftware.Steam
@@ -556,4 +549,8 @@ sudo eselect repository enable gentoo-zh && sudo emerge --sync gentoo-zh
 ```
 ```
 sudo emerge tlpui
+```
+For better usage i preffer run some scripts which use cpupower
+```
+sudo mv ./dotfiles/software/dots/scripts ~/ 
 ```
