@@ -1,69 +1,41 @@
 
->[!note]
->if Wi-Fi then use net-setup for connecting
-
 ## Preparing disks
 change partions with cfdisk utility.
 ```
 cfdisk /dev/{device}
 ```
 My volumes:
-    1. boot/efi
-    2. swap
-    3. root
-### LUKS
-I use --sector-size=2048 because I use SSD, on NVME I want --sector-size=4096
+    1. /
+    2. /boot
+    3. /boot/efi
+    4. swap
+Formating root
 ```
-cryptsetup luksFormat --sector-size=2048 --key-size=1024 /dev/sda3
+mkfs.btrfs /dev/nvme0n1p
 ```
-Create strong passphrase
-
-Open and map the LUKS device
+Formating boot
 ```
-cryptsetup luksOpen /dev/sda3 root
+mkfs.btrfs /dev/nvme0n1p
 ```
-Now we can check our new LUKS device
+Formating /efi
 ```
-cryptsetup status root
+mkfs.fat -F 32 /dev/nvme0n1p
 ```
-Device is available at /dev/mapper/root. Just use /dev/mapper/root for the device.
-
-I will use btrfs
+Formating swap
 ```
-mkfs.btrfs /dev/mapper/root
+mkswap /dev/nvme0n1p && swapon /dev/nvme0n1p
 ```
+Mounting root
 ```
-mount /dev/mapper/root /mnt/gentoo
+mount /dev/nvme0n1p /mnt/gentoo
 ```
-Creating and mounting swap
+Cd into mounted folder
 ```
-mkswap /dev/sda2
-swapon /dev/sda2
-```
-Creating btrfs subvolume for home directory
-```
-btrfs subvolume create /mnt/gentoo/home
-```
-I will use btrfs for boot/efi pation
-```
-mkfs.btrfs /dev/sda1 -f
-```
-
-Cd into mounted drive
-```
-cd /mnt/gentoo
-```
-Sync time
-```
-chronyd -q
+cd /mnt/gentoo && chronyd -q
 ```
 Open terminal browser and download stage3 file from ru mirror
 ```
-links https://www.gentoo.org/downloads/mirrors/
-```
-Unzip stage3
-```
-tar xpvf stage3-*.tar.xz --xattrs-include='*.*' --numeric-owner
+links https://www.gentoo.org/downloads/mirrors/ && tar xpvf stage3-*.tar.xz --xattrs-include='*.*' --numeric-owner
 ```
 Change make.conf like mine. Need to set:
     1. ACCEPT_LICENSE
@@ -78,7 +50,7 @@ vim /mnt/gentoo/etc/portage/make.conf
 
 [My make.conf](dotfiles/portage/make.conf)
 
-Copying resolv.conf for connect to internet working
+Copying resolv.conf for internet work
 ```
 cp --dereference /etc/resolv.conf /mnt/gentoo/etc/
 ```
@@ -101,15 +73,19 @@ source /etc/profile &&
 export PS1="(chroot) ${PS1}"
 ```
 ### Preparing for a bootloader
-Mounting boot/efi partion
+Mounting boot partion
 ```
-mount /dev/sda1 (/efi or /boot) --mkdir
+mount /dev/nvme0n1p /boot --mkdir 
+```
+Mounting efi partion
+```
+mount /dev/nvme0n1p /boot/efi --mkdir 
 ```
 ### Updating the portage tree
 ```
 emerge-webrsync
 ```
-[!note]
+>[!note]
 > Mirror select need for select best mirrors for gentoo repos
 > It's not need if you alredy define it in make.conf
 Selecting mirrors
@@ -129,10 +105,7 @@ eselect profile set 28
 ```
 ### add C flags
 ```
-emerge --ask --oneshot app-portage/cpuid2cpuflags
-```
-```
-echo "*/* $(cpuid2cpuflags)" > /etc/portage/package.use/00cpu-flags
+emerge --oneshot app-portage/cpuid2cpuflags && echo "*/* $(cpuid2cpuflags)" > /etc/portage/package.use/00cpu-flags
 ```
     
 ## Update @world set
@@ -153,7 +126,7 @@ emerge --config sys-libs/timezone-data
 ```
 For systemd
 ```
-ln -sf ../usr/share/zoneinfo/Europe/Brussels /etc/localtime
+ln -sf ../usr/share/zoneinfo/Europe/Moscow /etc/localtime
 ```
 ## Configure locales
 ```
@@ -166,20 +139,15 @@ locale-gen
 eselect locale list
 ```
 ```
-eselect locale set 2
+eselect locale set 4
 ```
 ```
 env-update && source /etc/profile && export PS1="(chroot) ${PS1}"
 ```
-## Installing firmware and microcode
-```
-emerge --ask sys-kernel/linux-firmware sys-firmware/intel-microcode
-```
-For newer firmware mayby need to install sof-firmware
-```
-emerge --ask sys-firmware/sof-firmware
-```
-# Kernel
+>[!note]
+> I install kernel before installing firmware and microcode
+> because i set `dist-kernel` flag in global USE flags and linux-firmware or intel-microcode
+> require installed dist-kernel
 ## Distribution kernel
 ```
 echo "sys-kernel/installkernel dracut" >>  /etc/portage/package.use/installkernel
@@ -188,19 +156,20 @@ I prefer binnary package cause of i dont change any settings in kernel and compi
 ```
 emerge --ask sys-kernel/gentoo-kernel-bin
 ```
+## Installing firmware and microcode
 ```
-emerge --depclean
+emerge --ask sys-kernel/linux-firmware sys-firmware/intel-microcode sys-firmware/sof-firmware
 ```
-
 ### Select kernel
+This is not neccesary if you install only one kernel
+
+Just check which kernel you use
 ```
 eselect kernel list
 ```
 ```
 eselect kernel set 1
 ```
-
-
 ## Writing fstab
 ```
 blkid
@@ -210,35 +179,45 @@ vim /etc/fstab
 ```
 write by [example](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/System)
 
-I use this params for volumes:
-
-1. For btrfs: btrfs,noatime,defaults,autodefrag,compress-force=zstd:1
+I use this fstab
+```
+/dev/nvme0n1p1   /efi        vfat    umask=0077     0 2
+/dev/nvme0n1p2   none         swap    sw                   0 0
+/dev/nvme0n1p3   /            btrfs   subvol=@,noatime,defaults,autodefrag,compress-force=zstd:1              0 1
+/dev/nvme0n1p3   /home            btrfs   subvol=@home,noatime,defaults,autodefrag,compress-force=zstd:1              0 2
+/dev/nvme0n1p3   /snapshots            btrfs   subvol=@snapshots,noatime,defaults,autodefrag,compress-force=zstd:8              0 2
+/dev/nvme0n1p4    /windows        vfat    umask=0077    0    2
+```
 # Networking
 
 ### Hostname
-[!note]
-> for systemd use
-> ``` hostnamectl hostname tux ```
+>[!note]
+> for systemd use(but nothing change)
+> ``` hostnamectl hostname NAME ```
 ```
-echo {name} > /etc/hostname
+echo NAME > /etc/hostname
 ```
 
-### IP
+### IP setup
 ```
 emerge --ask net-misc/dhcpcd
 ```
+>[!note]
+> systemd
+> `systemctl enable dhcpcd`
 ```
 rc-update add dhcpcd default
 ```
 ```
 rc-service dhcpcd start
 ```
-## System information
+## System configuration
 ### Root password
 ```
 passwd
 ```
 ### Init and boot configuration
+This one, for systemd, openrc dont need
 ```
 systemd-machine-id-setup
 ```
