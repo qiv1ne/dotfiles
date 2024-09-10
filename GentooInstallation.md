@@ -1,63 +1,63 @@
-1. [Installing](#Install)
-	1. [Preparing disks](#)
-	2. [Installing stage and base configuration](#)
-	3. [Chroot](#)
-	4. [Preparation for bootloader](#)
-	5. [Portage update](#)
-	6. [Choosing profile](#)
-	7. [Add C flags](#)
-	8. [Update world](#)
-	9. [Configure timezone](#)
-	10. [Configure locales](#)
-	11. [Kernel](#)
-	12. [Firmware and microcode](#)
-	13. [Select kernel](#)
-	14. [Fstab](#)
-	15. [Network](#)
-		1. [Hostname](#)
-		2. [IP	](#)
-	16. [System configuration](#)
-		1. [Root password](#)
-		2. [Init and boot configuration ( systemd only )](#)
-	17. [Tools](#)
-		1. [Loggin daemon ( openRC only )](#)
-		2. [Cron daemon ( openRC only )](#)
-		3. [File indexing](#)
-		4. [SSH](#)
-		5. [Time sync](#)
-		6. [Filesystems](#)
-		7. [Networking tools](#)
-			1. [Ethernet](#)
-			2. [Wi-Fi](#)
-		8. [GRUB](#)
-	18. [Preparing for DE/WM ( openRC only )](#)
-	19. [Usefull packages](#)
-	20. [New user](#)
-	21. [Finish](#)
-2. [Post install](#)
-	1. [Root](#)
-	2. [Cleanup](#)
-	3. [Other soft](#)
-	4. [Bluetooth](#)
-	5. [Fonts](#)
-	6. [Guru overlay](#)
-	7. [Neovim](#)
-	8. [Flatpak](#)
-	9. [Browsers](#)
-	    1. [Brave](#)
-		2. [Zen](#)
-		3. [Qutebrowser](#)
-		4. [Tor](#)
-	10. [Zswap](#)
-	11. [Zsh](#)
-	12. [Qemu/KVM](#)
-	13. [Steam](#)
-	14. [Discord](#)
-	15. [Lutris](#)
-	16. [Bottles](#)
-	17. [Power managment](#)
+1. [Installing](#Installing)
+	1. [Preparing drives](#Drives)
+	2. [Installing stage and base configuration](#Stage)
+	3. [Chroot](#Chroot)
+	4. [Preparation for bootloader](#Preparation)
+	5. [Portage update](#Portage)
+	6. [Choosing profile](#Profile)
+	7. [Add C flags](#C)
+	8. [Update world](#@world)
+	9. [Configure timezone](#Timezone)
+	10. [Configure locales](#Locales)
+	11. [Kernel](#Distribution)
+	12. [Firmware and microcode](#Firmware)
+	13. [Select kernel](#Select)
+	14. [Writing fstab](#Fstab)
+	15. [Network](#Network)
+		1. [Hostname](#Hostname)
+		2. [IP	](#IP)
+	16. [System configuration](#System)
+		1. [Root password](#Root)
+		2. [Init and boot configuration ( systemd only )](#Init)
+	17. [Tools](#Tools)
+		1. [Loggin daemon ( openRC only )](#Loggin)
+		2. [Cron daemon ( openRC only )](#Cron)
+		3. [File indexing](#File)
+		4. [SSH](#SSH)
+		5. [Time sync](#Time)
+		6. [Filesystems](#File-system)
+		7. [Networking tools](#Networking)
+			1. [Ethernet](#Ethernet)
+			2. [Wi-Fi](#Wi-Fi)
+		8. [GRUB](#Bootloader)
+	18. [Preparing for DE/WM ( openRC only )](#Preparing)
+	19. [Usefull packages](#Usefull-packages)
+	20. [New user](#New-user)
+	21. [Finish](#Reboot)
+2. [Post install](#Post)
+	1. [Root](#Disable)
+	2. [Cleanup](#Cleanup)
+	3. [Other soft](#Other-software)
+	4. [Bluetooth](#Bluetooth)
+	5. [Fonts](#Fonts)
+	6. [Guru overlay](#Guru)
+	7. [Neovim](#Neovim)
+	8. [Flatpak](#Flatpak)
+	9. [Browsers](#Browsers)
+	    1. [Brave](#Brave)
+		2. [Zen](#Zen)
+		3. [Qutebrowser](#Qutebrowser)
+		4. [Tor](#Tor)
+	10. [Zswap](#Zswap)
+	11. [Zsh](#Zsh)
+	12. [Qemu/KVM](#Qemu/KVM)
+	13. [Steam](#Steam)
+	14. [Discord](#Discord)
+	15. [Lutris](#Lutris)
+	16. [Bottles](#Bottles)
+	17. [Power managment](#Power)
 # Installing
-## Preparing disks
+## Drives
 change partions with cfdisk utility.
 ```
 cfdisk /dev/{device}
@@ -91,7 +91,7 @@ Cd into mounted folder and sync time
 ```
 cd /mnt/gentoo && chronyd -q
 ```
-## Installing stage and base configuration
+## Stage and base configuration
 Open terminal browser and download stage3 file from ru mirror
 ```
 links https://www.gentoo.org/downloads/mirrors/ && tar xpvf stage3-*.tar.xz --xattrs-include='*.*' --numeric-owner
@@ -132,7 +132,7 @@ chroot /mnt/gentoo /bin/bash
 source /etc/profile &&
 export PS1="(chroot) ${PS1}"
 ```
-## Preparion for a bootloader
+## Preparation for a bootloader
 Mounting boot partion
 ```
 mount /dev/nvme0n1p /boot --mkdir 
@@ -141,7 +141,7 @@ Mounting efi partion
 ```
 mount /dev/nvme0n1p /boot/efi --mkdir 
 ```
-## Updating the portage tree and repo
+## Portage tree and repo
 ```
 emerge-webrsync
 ```
@@ -156,19 +156,19 @@ emerge --ask --verbose --oneshot app-portage/mirrorselect && mirrorselect -i -o 
 ```
 emerge --sync --quiet
 ```
-## Choosing the right profile
+## Profile
 ```
 eselect profile list | less
 ```
 ```
 eselect profile set 28
 ```
-### add C flags
+### C
 ```
 emerge --oneshot app-portage/cpuid2cpuflags && echo "*/* $(cpuid2cpuflags)" > /etc/portage/package.use/00cpu-flags
 ```
     
-## Update @world set
+## @world
 
 ```
 emerge --ask --verbose --update --deep --newuse @world
@@ -328,7 +328,7 @@ emerge --ask net-misc/chrony
 ```
 rc-update add chronyd default
 ```
-### File system drivers and tools
+### File-system
 ```
 emerge --ask sys-block/io-scheduler-udev-rules sys-fs/xfsprogs 	sys-fs/e2fsprogs 	sys-fs/dosfstools 	sys-fs/btrfs-progs 	sys-fs/zfs 	sys-fs/jfsutils ntfs3g
 ```
@@ -379,11 +379,11 @@ rc-update add elogind boot
 ```
 gpasswd -a root video
 ```
-## Install some usefull packages
+## Usefull-packages
 ```
 emerge sudo udev pciutils usbutils cfg-update gentoolkit eselect-repository
 ```
-# Adding new user
+# New-user
 ```
 useradd -m -G wheel,audio,video,usb -s /bin/bash me
 ```
@@ -407,7 +407,7 @@ Load your new system
 ```
 sudo passwd -dl root
 ```
-## Disk cleanup
+## Cleanup
 ```
 sudo rm /stage3-*.tar.*
 ```
@@ -415,7 +415,7 @@ sudo rm /stage3-*.tar.*
 sudo emerge --deepclean
 ```
 
-## Installing other software
+## Other-software
 
 ```
 sudo emerge --ask --quiet --verbose --tree kitty btop dolphin qbittorrent ark vlc gparted
