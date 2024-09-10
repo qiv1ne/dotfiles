@@ -1,4 +1,62 @@
-
+1. [Installing](#Install)
+	1. [Preparing disks](#)
+	2. [Installing stage and base configuration](#)
+	3. [Chroot](#)
+	4. [Preparation for bootloader](#)
+	5. [Portage update](#)
+	6. [Choosing profile](#)
+	7. [Add C flags](#)
+	8. [Update world](#)
+	9. [Configure timezone](#)
+	10. [Configure locales](#)
+	11. [Kernel](#)
+	12. [Firmware and microcode](#)
+	13. [Select kernel](#)
+	14. [Fstab](#)
+	15. [Network](#)
+		1. [Hostname](#)
+		2. [IP	](#)
+	16. [System configuration](#)
+		1. [Root password](#)
+		2. [Init and boot configuration ( systemd only )](#)
+	17. [Tools](#)
+		1. [Loggin daemon ( openRC only )](#)
+		2. [Cron daemon ( openRC only )](#)
+		3. [File indexing](#)
+		4. [SSH](#)
+		5. [Time sync](#)
+		6. [Filesystems](#)
+		7. [Networking tools](#)
+			1. [Ethernet](#)
+			2. [Wi-Fi](#)
+		8. [GRUB](#)
+	18. [Preparing for DE/WM ( openRC only )](#)
+	19. [Usefull packages](#)
+	20. [New user](#)
+	21. [Finish](#)
+2. [Post install](#)
+	1. [Root](#)
+	2. [Cleanup](#)
+	3. [Other soft](#)
+	4. [Bluetooth](#)
+	5. [Fonts](#)
+	6. [Guru overlay](#)
+	7. [Neovim](#)
+	8. [Flatpak](#)
+	9. [Browsers](#)
+	    1. [Brave](#)
+		2. [Zen](#)
+		3. [Qutebrowser](#)
+		4. [Tor](#)
+	10. [Zswap](#)
+	11. [Zsh](#)
+	12. [Qemu/KVM](#)
+	13. [Steam](#)
+	14. [Discord](#)
+	15. [Lutris](#)
+	16. [Bottles](#)
+	17. [Power managment](#)
+# Installing
 ## Preparing disks
 change partions with cfdisk utility.
 ```
@@ -29,10 +87,11 @@ Mounting root
 ```
 mount /dev/nvme0n1p /mnt/gentoo
 ```
-Cd into mounted folder
+Cd into mounted folder and sync time
 ```
 cd /mnt/gentoo && chronyd -q
 ```
+## Installing stage and base configuration
 Open terminal browser and download stage3 file from ru mirror
 ```
 links https://www.gentoo.org/downloads/mirrors/ && tar xpvf stage3-*.tar.xz --xattrs-include='*.*' --numeric-owner
@@ -50,6 +109,7 @@ vim /mnt/gentoo/etc/portage/make.conf
 [My make.conf](dotfiles/portage/make.conf)
 
 
+## Chroot
 Copying resolv.conf for internet work
 ```
 cp --dereference /etc/resolv.conf /mnt/gentoo/etc/
@@ -72,7 +132,7 @@ chroot /mnt/gentoo /bin/bash
 source /etc/profile &&
 export PS1="(chroot) ${PS1}"
 ```
-### Preparing for a bootloader
+## Preparion for a bootloader
 Mounting boot partion
 ```
 mount /dev/nvme0n1p /boot --mkdir 
@@ -81,14 +141,14 @@ Mounting efi partion
 ```
 mount /dev/nvme0n1p /boot/efi --mkdir 
 ```
-### Updating the portage tree
+## Updating the portage tree and repo
 ```
 emerge-webrsync
 ```
 >[!note]
 > Mirror select need for select best mirrors for gentoo repos
 > It's not need if you alredy define it in make.conf
-Selecting mirrors
+#### Choose mirrors
 ```
 emerge --ask --verbose --oneshot app-portage/mirrorselect && mirrorselect -i -o >> /etc/portage/make.conf
 ```
@@ -96,7 +156,7 @@ emerge --ask --verbose --oneshot app-portage/mirrorselect && mirrorselect -i -o 
 ```
 emerge --sync --quiet
 ```
-### Choosing the right profile
+## Choosing the right profile
 ```
 eselect profile list | less
 ```
@@ -117,6 +177,10 @@ emerge --ask --verbose --update --deep --newuse @world
 emerge --ask --depclean
 ```
 ## Timezone
+> [!note]
+> For systemd
+> ``` ln -sf ../usr/share/zoneinfo/Europe/Moscow /etc/localtime ```
+
 For OpenRC 
 ```
 echo "Europe/Moscow" > /etc/timezone
@@ -124,11 +188,7 @@ echo "Europe/Moscow" > /etc/timezone
 ```
 emerge --config sys-libs/timezone-data
 ```
-For systemd
-```
-ln -sf ../usr/share/zoneinfo/Europe/Moscow /etc/localtime
-```
-## Configure locales
+## Locales
 ```
 echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && echo "ru_RU.UTF-8 UTF-8" >> /etc/locale.gen
 ```
@@ -156,7 +216,7 @@ I prefer binnary package cause of i dont change any settings in kernel and compi
 ```
 emerge --ask sys-kernel/gentoo-kernel-bin
 ```
-## Installing firmware and microcode
+## Firmware and microcode
 ```
 emerge --ask sys-kernel/linux-firmware sys-firmware/intel-microcode sys-firmware/sof-firmware
 ```
@@ -188,7 +248,7 @@ I use this fstab
 /dev/nvme0n1p3   /snapshots            btrfs   subvol=@snapshots,noatime,defaults,autodefrag,compress-force=zstd:8              0 2
 /dev/nvme0n1p4    /windows        vfat    umask=0077    0    2
 ```
-# Networking
+## Network
 
 ### Hostname
 >[!note]
