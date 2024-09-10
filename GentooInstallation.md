@@ -9,34 +9,34 @@
 	8. [Update world](#World)
 	9. [Configure timezone](#Timezone)
 	10. [Configure locales](#Locales)
-	11. [Kernel](#Distribution)
+	11. [Kernel](#Dist-kernel)
 	12. [Firmware and microcode](#Firmware&Microcode)
 	14. [Writing fstab](#Fstab)
 	15. [Network](#Network)
 		1. [Hostname](#Hostname)
 		2. [IP	](#IP)
-	16. [System configuration](#System)
-		1. [Root password](#Root)
-		2. [Init and boot configuration ( systemd only )](#Init)
+	16. [System configuration](#System-configuration)
+		1. [Root password](#Root-pass)
+		2. [Init and boot configuration ( systemd only )](#Init&Boot)
 	17. [Tools](#Tools)
-		1. [Loggin daemon ( openRC only )](#Loggin)
-		2. [Cron daemon ( openRC only )](#Cron)
-		3. [File indexing](#File)
-		4. [SSH](#SSH)
-		5. [Time sync](#Time)
+		1. [Loggin daemon ( openRC only )](#Loggind)
+		2. [Cron daemon ( openRC only )](#Crond)
+		3. [File indexing](#File-index)
+		4. [SSH](#SSHd)
+		5. [Time sync](#Time-sync)
 		6. [Filesystems](#File-system)
-		7. [Networking tools](#Networking)
+		7. [Networking tools](#Network-tools)
 			1. [Ethernet](#Ethernet)
 			2. [Wi-Fi](#Wi-Fi)
 		8. [GRUB](#Bootloader)
-	18. [Preparing for DE/WM ( openRC only )](#Preparing)
+	18. [Preparing for DE/WM ( openRC only )](#de/wm)
 	19. [Usefull packages](#Usefull-packages)
 	20. [New user](#New-user)
 	21. [Finish](#Reboot)
-2. [Post install](#Post)
-	1. [Root](#Disable)
+2. [Post install](#Post-install)
+	1. [Disable root login](#Disable-root)
 	2. [Cleanup](#Cleanup)
-	3. [Other soft](#Other-software)
+	3. [Other software](#Other-software)
 	4. [Bluetooth](#Bluetooth)
 	5. [Fonts](#Fonts)
 	6. [Guru overlay](#Guru)
@@ -219,7 +219,7 @@ emerge --ask sys-kernel/gentoo-kernel-bin
 ```
 emerge --ask sys-kernel/linux-firmware sys-firmware/intel-microcode sys-firmware/sof-firmware
 ```
-### Select kernel
+### Dist-kernel
 This is not neccesary if you install only one kernel
 
 Just check which kernel you use
@@ -229,7 +229,7 @@ eselect kernel list
 ```
 eselect kernel set 1
 ```
-## Writing fstab
+## Fstab
 ```
 blkid
 ```
@@ -257,7 +257,7 @@ I use this fstab
 echo NAME > /etc/hostname
 ```
 
-### IP setup
+### IP
 ```
 emerge --ask net-misc/dhcpcd
 ```
@@ -270,12 +270,12 @@ rc-update add dhcpcd default
 ```
 rc-service dhcpcd start
 ```
-## System configuration
-### Root password
+## System-configuration
+### Root-pass
 ```
 passwd
 ```
-### Init and boot configuration
+### Init&Boot
 This one, for systemd, openrc dont need
 ```
 systemd-machine-id-setup
@@ -288,7 +288,7 @@ systemctl preset-all --preset-mode=enable-only
 ```
 ### [Other configuration](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/System)
 ## Tools
-### Loggin daemon
+### Loggind
 > [!note]
 > for systemd not needed
 ```
@@ -297,7 +297,7 @@ emerge --ask app-admin/sysklogd
 ```
 rc-update add sysklogd default
 ```
-### Cron daemon
+### Crond
 > [!note]
 > for systemd not needed
 ```
@@ -306,18 +306,18 @@ emerge --ask sys-process/cronie
 ```
 rc-update add cronie default
 ```
-### File indexing
+### File-index
 ```
 emerge --ask sys-apps/mlocate
 ```
-### SSH
+### SSHd
 > [!note]
 > for systemd use
 > ``` systemctl enable sshd ```
 ```
 rc-update add sshd default
 ```
-### Time synchronization
+### Time-sync
 > [!note]
 > systemd
 > ``` systemctl enable systemd-timesyncd.service ```
@@ -331,7 +331,7 @@ rc-update add chronyd default
 ```
 emerge --ask sys-block/io-scheduler-udev-rules sys-fs/xfsprogs 	sys-fs/e2fsprogs 	sys-fs/dosfstools 	sys-fs/btrfs-progs 	sys-fs/zfs 	sys-fs/jfsutils ntfs3g
 ```
-### Networking tools
+### Network-tools
 #### Ethernet
 ```
 emerge --ask net-dialup/ppp
@@ -367,7 +367,7 @@ grub-install --target=x86_64-efi --efi-directory=/efi --removable
 ```
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
-## Preparing for de/wm
+## de/wm
 If using open-rc than do this steps
 ```
 emerge elogind
@@ -400,9 +400,9 @@ exit
 cd && umount -l /mnt/gentoo/dev{/shm,/pts,} &&  umount -R /mnt/gentoo && reboot
 ```
 Load your new system
-# Post install
+# Post-install
 
-## Disable root login
+## Disable-root
 ```
 sudo passwd -dl root
 ```
