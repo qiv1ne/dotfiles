@@ -1,17 +1,16 @@
 1. [Installing](#Installing)
 	1. [Preparing drives](#Drives)
-	2. [Installing stage and base configuration](#Stage)
+	2. [Installing stage and base configuration](#Stage-and-base)
 	3. [Chroot](#Chroot)
-	4. [Preparation for bootloader](#Preparation)
-	5. [Portage update](#Portage)
+	4. [Preparation for bootloader](#Boot-preporation)
+	5. [Portage update](#Portage-update)
 	6. [Choosing profile](#Profile)
 	7. [Add C flags](#C)
-	8. [Update world](#@world)
+	8. [Update world](#World)
 	9. [Configure timezone](#Timezone)
 	10. [Configure locales](#Locales)
 	11. [Kernel](#Distribution)
-	12. [Firmware and microcode](#Firmware)
-	13. [Select kernel](#Select)
+	12. [Firmware and microcode](#Firmware&Microcode)
 	14. [Writing fstab](#Fstab)
 	15. [Network](#Network)
 		1. [Hostname](#Hostname)
@@ -91,7 +90,7 @@ Cd into mounted folder and sync time
 ```
 cd /mnt/gentoo && chronyd -q
 ```
-## Stage and base configuration
+## Stage-and-base
 Open terminal browser and download stage3 file from ru mirror
 ```
 links https://www.gentoo.org/downloads/mirrors/ && tar xpvf stage3-*.tar.xz --xattrs-include='*.*' --numeric-owner
@@ -132,7 +131,7 @@ chroot /mnt/gentoo /bin/bash
 source /etc/profile &&
 export PS1="(chroot) ${PS1}"
 ```
-## Preparation for a bootloader
+## Boot-preporation
 Mounting boot partion
 ```
 mount /dev/nvme0n1p /boot --mkdir 
@@ -141,7 +140,7 @@ Mounting efi partion
 ```
 mount /dev/nvme0n1p /boot/efi --mkdir 
 ```
-## Portage tree and repo
+## Portage-update
 ```
 emerge-webrsync
 ```
@@ -168,7 +167,7 @@ eselect profile set 28
 emerge --oneshot app-portage/cpuid2cpuflags && echo "*/* $(cpuid2cpuflags)" > /etc/portage/package.use/00cpu-flags
 ```
     
-## @world
+## World
 
 ```
 emerge --ask --verbose --update --deep --newuse @world
@@ -216,7 +215,7 @@ I prefer binnary package cause of i dont change any settings in kernel and compi
 ```
 emerge --ask sys-kernel/gentoo-kernel-bin
 ```
-## Firmware and microcode
+## Firmware&Microcode
 ```
 emerge --ask sys-kernel/linux-firmware sys-firmware/intel-microcode sys-firmware/sof-firmware
 ```
