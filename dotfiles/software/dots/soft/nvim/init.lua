@@ -1099,6 +1099,13 @@ require("lazy").setup({
 		"wakatime/vim-wakatime",
 		lazy = false,
 	},
+	{
+		"ellisonleao/carbon-now.nvim",
+		lazy = true,
+		cmd = "CarbonNow",
+		---@param opts cn.ConfigSchema
+		opts = { [[ your custom config here ]] },
+	},
 }, {
 	ui = {
 		-- If you are using a Nerd Font: set icons to an empty table which will use the
