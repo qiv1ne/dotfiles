@@ -687,7 +687,8 @@ require("lazy").setup({
 	-- change the command in the config to whatever the name of that colorscheme is.
 	--
 	-- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-	{ "ellisonleao/gruvbox.nvim", priority = 1000, config = true, opts = ... },
+	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+	-- { "ellisonleao/gruvbox.nvim", priority = 1000, config = true, opts = ... },
 	-- Highlight todo, notes, etc in comments
 	{
 		"folke/todo-comments.nvim",
@@ -971,7 +972,7 @@ require("lazy").setup({
 		config = function(_, opts)
 			require("sttusline").setup({
 				-- statusline_color = "#990000",
-				statusline_color = require("gruvbox").palette.dark1,
+				-- statusline_color = require("gruvbox").palette.dark1,
 
 				-- | 1 | 2 | 3
 				-- recommended: 3
@@ -1188,5 +1189,6 @@ keymap("n", "<C-u>", ":bnext<CR>", opts)
 keymap("n", "<C-u>", ":bprev<CR>", opts)
 
 -- colorscheme
-vim.o.background = "dark" -- or "light" for light mode
-vim.cmd([[colorscheme gruvbox]])
+-- vim.o.background = "dark" -- or "light" for light mode
+-- vim.cmd([[colorscheme gruvbox]])
+vim.cmd.colorscheme("catppuccin")
