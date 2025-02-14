@@ -1,4 +1,4 @@
-## It's my Gentoo linux post install setup
+# Gentoo linux post install
 
 Purpose of this guide is to install software for my needs and get dotfiles for software I use.
 
