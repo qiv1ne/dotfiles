@@ -54,7 +54,7 @@ sudo emerge www-client/brave-bin::brave-overlay
 
 Z shell
 ```
-sudo emerge --ask app-shells/zsh app-shells/zsh-completions app-shells/gentoo-zsh-completions 
+sudo emerge --ask app-shells/zsh app-shells/zsh-completions
 sudo cp -r zsh/.* ~/
 ```
 
