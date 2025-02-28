@@ -1,0 +1,5 @@
+media-video/pipewire pipewire-alsa
+media-video/pipewire sound-server
+# required by kde-plasma/plasma-meta-6.2.5::gentoo
+# required by plasma-meta (argument)
+>=kde-plasma/kwin-6.2.5 lock

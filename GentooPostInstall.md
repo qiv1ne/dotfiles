@@ -6,7 +6,7 @@ Purpose of this guide is to install software for my needs and get dotfiles for s
 
 First of all. Install some VERY usefull packages
 ```
-emerge sudo usbutils pciutils gentoolkit udev cfg-update eselect-repository vim btop
+emerge --ask sudo eselect-repository vim btop app-admin/sudo app-portage/cfg-update media-sound/alsa-utils net-wireless/bluetuith sys-apps/pciutils sys-apps/usbutils app-portage/gentoolkit app-shells/bash-completion
 ```
 
 Install new user
@@ -34,15 +34,19 @@ sudo rm -r /var/db/repos/gentoo
 sudo emaint sync -r gentoo
 ```
 
-KDE Plasma and Pipewire
+Pipewire
 ```
 echo "media-video/pipewire pipewire-alsa" >> /etc/portage/package.use/pipewire
-echo "kde-plasma/plasma-meta display-manager networkmanager sddm smart wallpapers" >> /etc/portage/package.use/plasma
-sudo emerge plasma-meta pipewire pulseaudio wireplumber sys-auth/rtkit
-sudo usermod -rG audio,pipewire larry
+sudo emerge pipewire pulseaudio wireplumber
+sudo usermod -rG audio,pipewire me
 systemctl --user disable --now pulseaudio.socket pulseaudio.service
 systemctl --user enable --now pipewire-pulse.socket wireplumber.service
 systemctl --user enable --now pipewire.service
+```
+KDE Plasma and Pipewire
+```
+echo "kde-plasma/plasma-meta display-manager networkmanager sddm smart wallpapers" >> /etc/portage/package.use/plasma
+sudo emerge plasma-meta sys-auth/rtkit
 ```
 
 Brave browser
@@ -52,11 +56,7 @@ sudo emerge --sync brave-overlay
 sudo emerge www-client/brave-bin::brave-overlay
 ```
 
-Z shell
-```
-sudo emerge --ask app-shells/zsh app-shells/zsh-completions
-sudo cp -r zsh/.* ~/
-```
+[Z shell](./zsh/zsh.md)
 
 Qemu/KVM with virt-manager
 ```
@@ -85,11 +85,7 @@ flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.f
 flatpak install flathub com.discordapp.Discord com.usebottles.bottles org.videolan.VLC com.valvesoftware.Steam net.lutris.Lutris org.qbittorrent.qBittorrent app.zen_browser.zen com.github.Matoking.protontricks com.wps.Office io.dbeaver.DBeaverCommunity io.mpv.Mpv
 ```
 
-Power management
-```
-sudo emerge --ask sys-power/thermald cpupower sys-power/tlp powertop
-systemctl enable --now tlp thermald powertop
-```
+[Power management](./Installing and setup/Power management/powerManagement.md)
 
 Neovim
 ```

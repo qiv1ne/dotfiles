@@ -1,7 +1,7 @@
-# Catppuccin theme.
-source ~/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh
-
+tmux
 # If you come from bash you might have to change your $PATH.
+#
+#
 # export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
 # Path to your Oh My Zsh installation.
@@ -73,8 +73,8 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(zsh-vi-mode zsh-autosuggestions zsh-syntax-highlighting)
-
+source ~/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh
+plugins=(vi-mode zsh-syntax-highlighting zsh-autosuggestions )
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -105,13 +105,3 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-#
-# Hotkey for yazi launch
-function y() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-	yazi "$@" --cwd-file="$tmp"
-	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-		builtin cd -- "$cwd"
-	fi
-	rm -f -- "$tmp"
-}
