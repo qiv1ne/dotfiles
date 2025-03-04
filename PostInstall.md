@@ -1,8 +1,8 @@
 # Post install
 
-1. (Useful packages)[#Packages]
-2. (New user)[#User]
-3. (Guru overlay)[#Guru]
+1. (Useful packages)[# Packages]
+2. (New user)[# User]
+3. (Guru overlay)[# Guru]
 4. (Change portage to git)[#Portage]
 5. (Pipewire)[#Pipewire]
 6. (I3 window manager)[#I3]
