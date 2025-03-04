@@ -39,7 +39,7 @@ sudo emaint sync -r gentoo
 You need to have pulseaudio USE flag in make.conf
 
 ```
-echo "media-video/pipewire pipewire-alsa" >> /etc/portage/package.use/pipewire
+echo "media-video/pipewire pipewire-alsa" | sudo tee -a /etc/portage/package.use/pipewire >> /dev/null
 sudo emerge pipewire pulseaudio wireplumber
 sudo usermod -rG audio,pipewire me
 systemctl --user disable --now pulseaudio.socket pulseaudio.service
@@ -59,17 +59,17 @@ sudo emerge xorg-server xorg-drivers xterm xclock i3 rofi
 
 I use Qemu/KVM with virt-manager for virtualization 
 ```
-sudo echo "app-emulation/qemu opengl alsa gtk keyutils ncurses pipewire plugins spice udev usb usbredir virgl vte zstd" >> /etc/portage/package.use/qemu
-sudo echo "app-emulation/libvirt udev qemu virt-network nfs nbd parted policykit pcap numa fuse macvtap vepa" >> /etc/portage/package.use/libvirt
-sudo echo "app-emulation/virt-manager gui policykit" >> /etc/portage/package.use/virt-manager
+echo "app-emulation/qemu opengl alsa gtk keyutils ncurses pipewire plugins spice udev usb usbredir virgl vte zstd" | sudo tee -a /etc/portage/package.use/qemu >> /dev/null
+echo "app-emulation/libvirt udev qemu virt-network nfs nbd parted policykit pcap numa fuse macvtap vepa" | sudo tee -a /etc/portage/package.use/libvirt >> /dev/null
+echo "app-emulation/virt-manager gui policykit" | sudo tee -a /etc/portage/package.use/virt-manager >> /dev/null
 sudo emerge qemu libvirt virt-manager
 sudo mkdir -p /etc/polkit-l/localauthority/50-local.d
-sudo echo "[Allow group libvirt management permissions]
+echo "[Allow group libvirt management permissions]
 Identity=unix-group:libvirt
 Action=org.libvirt.unix.manage
 ResultAny=yes
 ResultInactive=yes
-ResultActive=yes" >> /etc/polkit-l/localauthority/50-local.d/org.libvirt.unix.manage.pkla
+ResultActive=yes" | sudo tee -a /etc/polkit-l/localauthority/50-local.d/org.libvirt.unix.manage.pkla >> /dev/null
 sudo gpasswd -a me kvm libvirt
 sudo systemctl enable --now libvirtd
 ```
