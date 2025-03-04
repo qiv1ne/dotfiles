@@ -1,8 +1,10 @@
-# Gentoo installation 
-
 ## Gentoo setup
 
 Mainly I use holy Handbook and here I will only explain why I maid this chooses and not different. 
+
+### Portage
+
+I use [this make.conf](portage/make.conf) on my laptop
 
 ### File system 
 
