@@ -1,20 +1,12 @@
 # Post install
-
-1. (Useful packages)[# Packages]
-2. (New user)[# User]
-3. (Guru overlay)[# Guru]
-4. (Change portage to git)[#Portage]
-5. (Pipewire)[#Pipewire]
-6. (I3 window manager)[#I3]
-
-## Packages 
+## Must have packages 
 
 ```
 emerge --ask sudo eselect-repository neovim htop app-admin/sudo app-portage/cfg-update media-sound/alsa-utils net-wireless/bluetuith sys-apps/pciutils sys-apps/usbutils app-portage/gentoolkit app-shells/bash-completion
 ```
 
-##User
-Adding new user
+## Adding new user
+
 ```
 useradd -m -G wheel,audio,video,usb -s /bin/bash me
 passwd me
@@ -25,15 +17,15 @@ cd
 mkdir Downloads Documents 
 ```
 
-##Guru
-Enable guru overlay
+## Guru overlay
+
 ```
 sudo emerge --newuse app-eselect/eselect-repository
 sudo eselect repository enable guru
 sudo emerge --sync guru
 ```
 
-## Portage
+## Portage to git
 Change portage to git instead of rsync
 ```
 sudo eselect repository disable gentoo
@@ -45,6 +37,7 @@ sudo emaint sync -r gentoo
 ## Pipewire
 
 You need to have pulseaudio USE flag in make.conf
+
 ```
 echo "media-video/pipewire pipewire-alsa" >> /etc/portage/package.use/pipewire
 sudo emerge pipewire pulseaudio wireplumber
@@ -59,23 +52,17 @@ systemctl --user enable --now pipewire-pulse.socket wireplumber.service pipewire
 sudo emerge xorg-server xorg-drivers xterm xclock i3 rofi 
 ```
 
-Brave browser
-```
-sudo eselect repository add brave-overlay git https://gitlab.com/jason.oliveira/brave-overlay.git
-sudo emerge --sync brave-overlay
-sudo emerge www-client/brave-bin::brave-overlay
-```
 
-[Z shell](./zsh/zsh.md)
+## Zsh
 
-Qemu/KVM with virt-manager
+## Virtualization 
+
+I use Qemu/KVM with virt-manager for virtualization 
 ```
 sudo echo "app-emulation/qemu opengl alsa gtk keyutils ncurses pipewire plugins spice udev usb usbredir virgl vte zstd" >> /etc/portage/package.use/qemu
 sudo echo "app-emulation/libvirt udev qemu virt-network nfs nbd parted policykit pcap numa fuse macvtap vepa" >> /etc/portage/package.use/libvirt
 sudo echo "app-emulation/virt-manager gui policykit" >> /etc/portage/package.use/virt-manager
 sudo emerge qemu libvirt virt-manager
-sudo gpasswd -a me kvm libvirt
-sudo systemctl enable --now libvirtd
 sudo mkdir -p /etc/polkit-l/localauthority/50-local.d
 sudo echo "[Allow group libvirt management permissions]
 Identity=unix-group:libvirt
@@ -83,22 +70,38 @@ Action=org.libvirt.unix.manage
 ResultAny=yes
 ResultInactive=yes
 ResultActive=yes" >> /etc/polkit-l/localauthority/50-local.d/org.libvirt.unix.manage.pkla
+sudo gpasswd -a me kvm libvirt
+sudo systemctl enable --now libvirtd
 ```
 
-Flatpak
+## Flatpak with flathub
 ```
 emerge --ask sys-apps/flatpak
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 ```
-#### Install some apps
+
+### Install Zen browser(main browser)
+
 ```
-flatpak install flathub com.discordapp.Discord com.usebottles.bottles org.videolan.VLC com.valvesoftware.Steam net.lutris.Lutris org.qbittorrent.qBittorrent app.zen_browser.zen com.github.Matoking.protontricks com.wps.Office io.dbeaver.DBeaverCommunity io.mpv.Mpv
+sudo Flatpak install app.zen_browser.zen
 ```
 
+#### Install some bloatware 
+```
+flatpak install flathub com.discordapp.Discord com.usebottles.bottles org.videolan.VLC com.valvesoftware.Steam net.lutris.Lutris   com.github.Matoking.protontricks com.wps.Office io.dbeaver.DBeaverCommunity
+```
+
+#### Brave browser(second browser)
+```
+sudo eselect repository add brave-overlay git https://gitlab.com/jason.oliveira/brave-overlay.git
+sudo emerge --sync brave-overlay
+sudo emerge www-client/brave-bin::brave-overlay
+```
+
+### Power management 
 [Power management](./Installing and setup/Power management/powerManagement.md)
 
-Neovim
+### *Neovim*
 ```
-sudo emerge --ask app-emacs/rg dev-libs/tree-sitter dev-lua/luarocks dev-python/pynvim dev-python/tree-sitter media-fonts/fontawesome media-fonts/noto-emoji sys-apps/fd sys-apps/ripgrep neovim
-sudo cp -r .config/nvim ~/.config/
+sudo emerge --ask app-emacs/rg dev-libs/tree-sitter dev-lua/luarocks media-fonts/fontawesome media-fonts/noto-emoji sys-apps/fd sys-apps/ripgrep neovim
 ```
