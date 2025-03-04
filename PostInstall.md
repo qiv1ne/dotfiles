@@ -1,12 +1,19 @@
 # Post install
 
 1. (Useful packages)[#Packages]
+2. (New user)[#User]
+3. (Guru overlay)[#Guru]
+4. (Change portage to git)[#Portage]
+5. (Pipewire)[#Pipewire]
+6. (I3 window manager)[#I3]
 
+##Packages 
 ```
 emerge --ask sudo eselect-repository neovim htop app-admin/sudo app-portage/cfg-update media-sound/alsa-utils net-wireless/bluetuith sys-apps/pciutils sys-apps/usbutils app-portage/gentoolkit app-shells/bash-completion
 ```
 
-Add new user
+##User
+Adding new user
 ```
 useradd -m -G wheel,audio,video,usb -s /bin/bash me
 passwd me
@@ -14,10 +21,10 @@ echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
 passwd -dl root
 su me
 cd 
-mkdir Downloads 
+mkdir Downloads Documents 
 ```
 
-
+##Guru
 Enable guru overlay
 ```
 sudo emerge --newuse app-eselect/eselect-repository
@@ -25,6 +32,7 @@ sudo eselect repository enable guru
 sudo emerge --sync guru
 ```
 
+## Portage
 Change portage to git instead of rsync
 ```
 sudo eselect repository disable gentoo
@@ -33,19 +41,21 @@ sudo rm -r /var/db/repos/gentoo
 sudo emaint sync -r gentoo
 ```
 
-Pipewire
+## Pipewire
+
+You need to have pulseaudio USE flag in make.conf
 ```
 echo "media-video/pipewire pipewire-alsa" >> /etc/portage/package.use/pipewire
 sudo emerge pipewire pulseaudio wireplumber
 sudo usermod -rG audio,pipewire me
 systemctl --user disable --now pulseaudio.socket pulseaudio.service
-systemctl --user enable --now pipewire-pulse.socket wireplumber.service
-systemctl --user enable --now pipewire.service
+systemctl --user enable --now pipewire-pulse.socket wireplumber.service pipewire.service
 ```
-KDE Plasma and Pipewire
+
+## I3
+
 ```
-echo "kde-plasma/plasma-meta display-manager networkmanager sddm smart wallpapers" >> /etc/portage/package.use/plasma
-sudo emerge plasma-meta sys-auth/rtkit
+sudo emerge xorg-server xorg-drivers xterm xclock i3 rofi 
 ```
 
 Brave browser
