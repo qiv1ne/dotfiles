@@ -99,7 +99,18 @@ sudo emerge www-client/brave-bin::brave-overlay
 ```
 
 ### Power management 
-[Power management](./Installing and setup/Power management/powerManagement.md)
+
+```
+sudo emerge --ask --newuse sys-power/cpupower sys-power/powertop sys-power/thermald sys-power/tlp
+sudo systemctl enable --now thermald tlp
+sudo tlp start
+```
+
+Now unplug your AC adapter and calibrate powertop:
+```
+sudo powertop --calibrate
+sudo powertop --auto-tune
+```
 
 ### *Neovim*
 ```
