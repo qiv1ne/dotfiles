@@ -11,5 +11,6 @@ Copy dotfiles
 ```
 cp -r ./dotfiles/i3 ~/.config/
 cp -r ./dotfiles/rofi ~/.config/
+cp -r ./dotfiles/.wallpaper ~/
 ```
 
