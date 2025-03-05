@@ -2,7 +2,7 @@
 
 Full installation 
 ```
-curl 
+curl -fsSL "" | sh
 ```
 
 ## i3
