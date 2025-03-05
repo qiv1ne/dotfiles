@@ -1,9 +1,14 @@
 # Dotfiles installation
 
+Full installation 
+```
+curl 
+```
+
 ## i3
 Install dependencies
 ```
-sudo emerge i3 i3lock-color i3bar rofi picom i3status xwallpaper 
+sudo emerge --newuse i3 i3lock-color i3bar rofi picom i3status xwallpaper 
 ```
 
 Copy dotfiles
@@ -14,3 +19,11 @@ cp -r ./dotfiles/rofi ~/.config/
 cp -r ./dotfiles/.wallpaper ~/
 ```
 
+## Neovim
+
+Install dependencies 
+```
+sudo emerge --newuse go rg neovim
+```
+
+## 
